@@ -1,0 +1,53 @@
+{
+  "name": "serverless-elearning",
+  "version": "1.0.0",
+  "description": "Serverless Learning Environment",
+  "main": "src/app.js",
+  "scripts": {
+    "build": "tsc -pretty -p .",
+    "start-offline": "npm run build && serverless offline start",
+    "start-debug": "npm run build && SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline -s dev",
+    "test": "clear && npm run test:tslint",
+    "test:tslint": "tslint --project tsconfig.json",
+    "deploy": "npm run build && sls deploy --force"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrenoberto/serverless-elearning.git"
+  },
+  "keywords": [
+    "serverless",
+    "e-learning",
+    "typescript",
+    "node",
+    "express"
+  ],
+  "author": "Andre Noberto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrenoberto/serverless-elearning/issues"
+  },
+  "homepage": "https://github.com/andrenoberto/serverless-elearning#readme",
+  "dependencies": {
+    "aws-sdk": "^2.404.0",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "getenv": "^0.7.0",
+    "joi": "^14.3.1",
+    "serverless": "^1.37.1",
+    "serverless-http": "^1.9.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.19",
+    "@types/express": "^4.16.1",
+    "@types/getenv": "^0.7.0",
+    "@types/joi": "^14.3.1",
+    "@types/node": "^11.9.4",
+    "serverless-dotenv-plugin": "^2.0.1",
+    "serverless-offline": "^4.4.2",
+    "source-map-support": "^0.5.10",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  }
+}
