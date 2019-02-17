@@ -1,0 +1,28 @@
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+service: ${env:SERVERLESS_NAME}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${env:ENVIRONMENT}
+  region: us-east-1
+  versionFunctions: false
+  deploymentBucket:
+    name: serverless-elearning-${env:ENVIRONMENT}-deployment
+  environment:
+    AWS_KEY: ${env:AWS_KEY}
+    AWS_SECRET: ${env:AWS_KEY}
+    AWS_ACCOUNT_ID: ${env:AWS_ACCOUNT_ID}
+    AWS_REGION_CODE: ${env:AWS_REGION_CODE}
+
+    ENVIRONMENT: ${env:ENVIRONMENT}
+
+    CORS_ALLOW_ORIGIN: ${env:CORS_ALLOW_ORIGIN}
+
+    BASE_URL: ${env:BASE_URL}
+    PORT: ${env:PORT}
+
+    SERVERLESS_NAME: ${env:SERVERLESS_NAME}
