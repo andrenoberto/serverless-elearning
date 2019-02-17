@@ -1,0 +1,23 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+    "array-type": false,
+    "arrow-parens": false,
+    "decorators": false,
+    "max-line-length": false,
+    "member-ordering": false,
+    "no-any": true,
+    "no-console": false,
+    "no-string-literal": false,
+    "no-var-requires": false,
+    "object-literal-key-quotes": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": true,
+    "prefer-for-of": false,
+    "quotemark": [true, "single"],
+    "trailing-comma": false,
+    "typedef": [true, "call-signature"]
+  }
+}
