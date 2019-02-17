@@ -1,7 +1,7 @@
 # Serverless e-Learning
 [![Build Status](https://travis-ci.com/andrenoberto/serverless-elearning.svg?branch=master)](https://travis-ci.com/andrenoberto/serverless-elearning)
 ## Description
-API-First Headless virtual Learning environment built on top of AWS serverless architecture.
+API-First Headless virtual learning environment built on top of AWS serverless architecture.
 ## Contents
 <img align="right" width="400" src="https://s3.amazonaws.com/github-repositories-images/serverless-elearning-getting-started.png" />
 
