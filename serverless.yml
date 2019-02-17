@@ -12,6 +12,7 @@ provider:
   versionFunctions: false
   deploymentBucket:
     name: serverless-elearning-${env:ENVIRONMENT}-deployment
+  logRetentionInDays: 10
   environment:
     AWS_KEY: ${env:AWS_KEY}
     AWS_SECRET: ${env:AWS_KEY}
@@ -26,3 +27,20 @@ provider:
     PORT: ${env:PORT}
 
     SERVERLESS_NAME: ${env:SERVERLESS_NAME}
+
+resources:
+  Resources:
+    GatewayResponseDefault4XX:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,POST,DELETE,OPTIONS'"
+        ResponseType: DEFAULT_4XX
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+
+custom:
+  serverless-offline:
+    port: ${self:provider.environment.PORT}
