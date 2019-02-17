@@ -1,2 +1,2 @@
-# serverless-elearning
-An e-Learning web environment based on the serverless AWS architecture.
+# Serverless e-Learning
+A headless e-Learning API built using the serverless AWS architecture.
