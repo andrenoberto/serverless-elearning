@@ -1,2 +1,2 @@
 # Serverless e-Learning
-A headless e-Learning API built using the serverless AWS architecture.
+A headless e-Learning API built on top of AWS serverless architecture.
