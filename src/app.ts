@@ -2,4 +2,5 @@ import * as serverless from 'serverless-http';
 
 import {Api} from '@src/api';
 
-export const handler = serverless(new Api().app);
+/* tslint:disable no-any */
+export const handler: Promise<any> = serverless(new Api().app);

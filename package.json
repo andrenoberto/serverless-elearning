@@ -44,6 +44,7 @@
     "@types/getenv": "^0.7.0",
     "@types/joi": "^14.3.1",
     "@types/node": "^11.9.4",
+    "@types/serverless": "^1.18.1",
     "serverless-dotenv-plugin": "^2.0.1",
     "serverless-offline": "^4.4.2",
     "source-map-support": "^0.5.10",
