@@ -1,4 +1,5 @@
 # Serverless e-Learning
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/62e150176b514626b74788368eae1671)](https://app.codacy.com/app/andrenoberto/serverless-elearning?utm_source=github.com&utm_medium=referral&utm_content=andrenoberto/serverless-elearning&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/andrenoberto/serverless-elearning.svg?branch=master)](https://travis-ci.com/andrenoberto/serverless-elearning)
 ## Description
 API-First Headless virtual learning environment built on top of AWS serverless architecture.
