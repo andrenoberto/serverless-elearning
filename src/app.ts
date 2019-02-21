@@ -1,6 +1,5 @@
-import * as serverless from 'serverless-http';
+import { Api } from '@src/api';
 
-import {Api} from '@src/api';
+const serverless = require('serverless-http');
 
-/* tslint:disable no-any */
-export const handler: Promise<any> = serverless(new Api().app);
+export const handler = serverless(Api);
