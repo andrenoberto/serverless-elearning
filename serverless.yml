@@ -1,6 +1,6 @@
 plugins:
-  - serverless-offline
   - serverless-dotenv-plugin
+  - serverless-offline
 
 service: ${env:SERVERLESS_NAME}
 

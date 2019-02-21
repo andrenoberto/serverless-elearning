@@ -5,23 +5,23 @@ API-First Headless virtual learning environment built on top of AWS serverless a
 ## Contents
 <img align="right" width="400" src="https://s3.amazonaws.com/github-repositories-images/serverless-elearning-getting-started.png" />
 
-* [Supported Providers](#supported-providers)
-* [Services Used](#services-used)
-* [Quick Start](#quick-start)
-* [Contributing](#contributing)
-* [Licensing](#licensing)
+*   [Supported Providers](#supported-providers)
+*   [Services Used](#services-used)
+*   [Quick Start](#quick-start)
+*   [Contributing](#contributing)
+*   [Licensing](#licensing)
 ## <a name="supported-providers"></a>Supported Providers
-* AWS
+*   AWS
 ## <a name="services-used"></a>Services Used
-* API Gateway
-* Cognito
-* CloudFormation
-* Lambda
-* SES
+*   API Gateway
+*   Cognito
+*   CloudFormation
+*   Lambda
+*   SES
 ## <a name="quick-start"></a>Quick Start
 Feel free to use npm or yarn to run all scripts provided in this source code.
 
-1. **Install via npm or yarn:**
+1.  **Install via npm or yarn:**
 
   Using npm:
 ```bash
@@ -32,17 +32,17 @@ npm install
 yarn
 ```
 
-2. **Run TSLint:**
+2.  **Run TSLint:**
 ```bash
 yarn test
 ```
 
-3. **Offline development server:**
+3.  **Offline development server:**
 ```bash
 yarn start-offline
 ```
 
-4. **Deploy your code to AWS:**
+4.  **Deploy your code to AWS:**
 ```bash
 yarn deploy
 ```

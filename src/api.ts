@@ -38,4 +38,4 @@ export class API {
   }
 }
 
-export const Api = API;
+export const Api = new API().app;
