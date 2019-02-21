@@ -7,8 +7,9 @@
     "build": "tsc -pretty -p .",
     "start-offline": "npm run build && serverless offline start",
     "start-debug": "npm run build && SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline -s dev",
-    "test": "clear && npm run test:tslint",
+    "test": "clear && npm run test:tslint && npm run test:mdlint",
     "test:tslint": "tslint --project tsconfig.json",
+    "test:mdlint": "npx remark .",
     "deploy": "npm run build && sls deploy --force"
   },
   "repository": {
@@ -45,6 +46,10 @@
     "@types/joi": "^14.3.1",
     "@types/node": "^11.9.4",
     "@types/serverless": "^1.18.1",
+    "npx": "^10.2.0",
+    "remark-cli": "^6.0.1",
+    "remark-lint": "^6.0.4",
+    "remark-preset-lint-recommended": "^3.0.2",
     "serverless-dotenv-plugin": "^2.0.1",
     "serverless-offline": "^4.4.2",
     "source-map-support": "^0.5.10",
