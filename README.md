@@ -6,11 +6,18 @@ API-First Headless virtual learning environment built on top of AWS serverless a
 <img align="right" width="400" src="https://s3.amazonaws.com/github-repositories-images/serverless-elearning-getting-started.png" />
 
 * [Supported Providers](#supported-providers)
+* [Services Used](#services-used)
 * [Quick Start](#quick-start)
 * [Contributing](#contributing)
 * [Licensing](#licensing)
-## <a name="supporter-providers"></a>Supported Providers
+## <a name="supported-providers"></a>Supported Providers
 * AWS
+## <a name="services-used"></a>Services Used
+* API Gateway
+* Cognito
+* CloudFormation
+* Lambda
+* SES
 ## <a name="quick-start"></a>Quick Start
 Feel free to use npm or yarn to run all scripts provided in this source code.
 
