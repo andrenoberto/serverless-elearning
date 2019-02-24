@@ -3,7 +3,7 @@ import * as AWS from 'aws-sdk';
 import {Config} from '@config/environment';
 import {IConfig} from '@models/interfaces';
 
-export class CreateTable {
+export class Table {
   protected readonly config: IConfig;
   private dynamoDB: AWS.DynamoDB;
 
