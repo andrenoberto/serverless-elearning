@@ -10,10 +10,7 @@ export class CreatePlanTable {
   constructor() {
     this.config = Config.factory();
     this.dynamoDB = new AWS.DynamoDB({
-      apiVersion: this.config.aws.apiVersion,
-      accessKeyId: this.config.aws.key,
-      region: this.config.aws.region,
-      secretAccessKey: this.config.aws.secret
+      ...this.config.aws
     });
   }
 
