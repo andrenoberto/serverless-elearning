@@ -1,5 +1,6 @@
-import { Api } from '@src/api';
+import {API} from '@src/api';
 
 const serverless = require('serverless-http');
 
-export const handler = serverless(Api);
+/* tslint:disable no-any */
+export const handler: Promise<any> = serverless(new API().expressApp);

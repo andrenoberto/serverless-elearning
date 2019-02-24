@@ -5,15 +5,15 @@ import cors from '@libs/cors';
 import Routes from '@src/routes';
 
 export class API {
-  constructor(public readonly app: Express.Application = Express()) {
+  constructor(public readonly expressApp: Express.Application = Express()) {
     this.configureApi();
   }
 
   private configureApi(): void {
-    this.app.use(BodyParser.json());
-    this.app.use(cors);
-    this.app.use('/api', Routes);
-    this.app.use(API.errorHandling);
+    this.expressApp.use(BodyParser.json());
+    this.expressApp.use(cors);
+    this.expressApp.use('/api', Routes);
+    this.expressApp.use(API.errorHandling);
   }
 
   private static errorHandling(err, req, res, next): void {
@@ -36,6 +36,8 @@ export class API {
       res.status(500).json({ error: err });
     }
   }
-}
 
-export const Api = new API().app;
+  public get app(): Express.Application {
+    return this.expressApp;
+  }
+}
