@@ -1,5 +1,5 @@
-import {IConfigDynamoDB, IMigration} from '@models/interfaces';
 import {CreateTable} from '@db/migrations/create-table';
+import {IConfigDynamoDB, IMigration} from '@models/interfaces';
 
 export class CreateSubscriptionTable extends CreateTable implements IMigration {
   private readonly tableName: string;

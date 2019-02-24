@@ -1,6 +1,7 @@
-import {IConfig} from '@models/interfaces';
 import * as AWS from 'aws-sdk';
+
 import {Config} from '@config/environment';
+import {IConfig} from '@models/interfaces';
 
 export class CreateTable {
   protected readonly config: IConfig;
@@ -30,7 +31,7 @@ export class CreateTable {
       if (!err) {
         console.log(data);
       } else {
-        console.log(err)
+        console.log(err);
       }
     });
   }

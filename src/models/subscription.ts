@@ -1,4 +1,4 @@
-import {ISubscription} from "@models/interfaces/i-subscription";
+import {ISubscription} from '@models/interfaces/i-subscription';
 
 export class Subscription {
   private uuid: string;
