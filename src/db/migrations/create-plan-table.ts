@@ -1,7 +1,7 @@
 import * as AWS from 'aws-sdk';
 
 import {Config} from '@config/environment';
-import {IConfig} from '@models/interfaces';
+import {IConfig, IConfigDynamoDB} from '@models/interfaces';
 
 export class CreatePlanTable {
   private readonly config: IConfig;
@@ -17,7 +17,7 @@ export class CreatePlanTable {
   public up({
     readCapacityUnits: ReadCapacityUnits,
     writeCapacityUnits: WriteCapacityUnits
-            } = this.config.dynamoDB): void {
+            }: IConfigDynamoDB = this.config.dynamoDB): void {
     const params = {
       AttributeDefinitions: [
         {
