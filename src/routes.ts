@@ -1,4 +1,5 @@
 import * as Express from 'express';
+
 import V1 from '@api/v1';
 
 const router = Express.Router();

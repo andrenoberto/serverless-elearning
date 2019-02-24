@@ -11,7 +11,7 @@ export class SubscriptionTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
-  public get(callback) {
+  public get(callback): void {
     const params = {
       ExpressionAttributeNames: {
         '#id': 'Uuid',
