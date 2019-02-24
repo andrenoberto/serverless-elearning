@@ -35,4 +35,12 @@ export class Table {
       }
     });
   }
+
+  protected getItem(params, callback): void {
+    this.dynamoDB.getItem(params, callback);
+  }
+
+  protected scanTable(params, callback): void {
+    this.dynamoDB.scan(params, callback);
+  }
 }

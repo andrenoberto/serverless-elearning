@@ -14,6 +14,7 @@ export interface IConfigAWS {
 export interface IConfigDynamoDB {
   readCapacityUnits: number;
   writeCapacityUnits: number;
+  limit: number;
 }
 
 export interface IConfigEnv {
