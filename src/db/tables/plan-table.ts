@@ -1,3 +1,5 @@
+import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+
 import {Table} from '@db/tables/table';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
 
@@ -9,34 +11,38 @@ export class PlanTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
+  public down(): void {
+    this.deleteTable(this.tableName);
+  }
+
   public up({
               readCapacityUnits: ReadCapacityUnits,
               writeCapacityUnits: WriteCapacityUnits
             }: IConfigDynamoDB = this.config.dynamoDB): void {
-    const params = {
+    const params: DynamoDB.Types.CreateTableInput = {
       AttributeDefinitions: [
         {
-          AttributeName: 'uuid',
+          AttributeName: 'Uuid',
           AttributeType: 'S'
         },
         {
-          AttributeName: 'active',
+          AttributeName: 'Active',
           AttributeType: 'BOOL'
         },
         {
-          AttributeName: 'name',
+          AttributeName: 'Name',
           AttributeType: 'S'
         },
         {
-          AttributeName: 'description',
+          AttributeName: 'Description',
           AttributeType: 'S'
         },
         {
-          AttributeName: 'price',
+          AttributeName: 'Price',
           AttributeType: 'N'
         },
         {
-          AttributeName: 'days',
+          AttributeName: 'Days',
           AttributeType: 'N'
         }
       ],
@@ -46,20 +52,16 @@ export class PlanTable extends Table implements IMigration {
       },
       KeySchema: [
         {
-          AttributeName: 'uuid',
+          AttributeName: 'Uuid',
           KeyType: 'HASH'
         },
         {
-          AttributeName: 'name',
+          AttributeName: 'Name',
           KeyType: 'RANGE'
         }
       ],
       TableName: 'Plans'
     };
     this.createTable(params);
-  }
-
-  public down(): void {
-    this.deleteTable(this.tableName);
   }
 }

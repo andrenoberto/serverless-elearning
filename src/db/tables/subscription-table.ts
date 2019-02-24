@@ -1,3 +1,5 @@
+import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+
 import {Table} from '@db/tables/table';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
 
@@ -9,34 +11,67 @@ export class SubscriptionTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
+  public get(callback): void {
+    const params = {
+      ExpressionAttributeNames: {
+        '#id': 'Uuid',
+        '#act': 'Active',
+        '#name': 'Name',
+        '#desc': 'Description',
+        '#plan': 'Plans',
+        '#aG': 'AccessGroup'
+      },
+      ProjectionExpression: '#id, #act, #name, #desc, #plan, #aG',
+      Limit: this.config.dynamoDB.limit,
+      TableName: this.tableName
+    };
+    this.scanTable(params, callback);
+  }
+
+  public down(): void {
+    this.deleteTable(this.tableName);
+  }
+
+  public find(uuid: string, callback): void {
+    const params: DynamoDB.Types.GetItemInput = {
+      Key: {
+        'Uuid': {
+          S: uuid
+        }
+      },
+      TableName: this.tableName
+    };
+    this.getItem(params, callback);
+  }
+
   public up({
               readCapacityUnits: ReadCapacityUnits,
               writeCapacityUnits: WriteCapacityUnits
             }: IConfigDynamoDB = this.config.dynamoDB): void {
-    const params = {
+    const params: DynamoDB.Types.CreateTableInput = {
       AttributeDefinitions: [
         {
-          AttributeName: 'uuid',
+          AttributeName: 'Uuid',
           AttributeType: 'S'
         },
         {
-          AttributeName: 'active',
+          AttributeName: 'Active',
           AttributeType: 'BOOL'
         },
         {
-          AttributeName: 'name',
+          AttributeName: 'Name',
           AttributeType: 'S'
         },
         {
-          AttributeName: 'description',
+          AttributeName: 'Description',
           AttributeType: 'S'
         },
         {
-          AttributeName: 'plans',
+          AttributeName: 'Plans',
           AttributeType: 'SS'
         },
         {
-          AttributeName: 'accessGroup',
+          AttributeName: 'AccessGroup',
           AttributeType: 'SS'
         }
       ],
@@ -46,20 +81,16 @@ export class SubscriptionTable extends Table implements IMigration {
       },
       KeySchema: [
         {
-          AttributeName: 'uuid',
+          AttributeName: 'Uuid',
           KeyType: 'HASH'
         },
         {
-          AttributeName: 'name',
+          AttributeName: 'Name',
           KeyType: 'RANGE'
         }
       ],
       TableName: this.tableName
     };
     this.createTable(params);
-  }
-
-  public down(): void {
-    this.deleteTable(this.tableName);
   }
 }

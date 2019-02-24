@@ -15,7 +15,8 @@ export class Environment {
   public static get dynamoDB(): IConfigDynamoDB {
     return {
       readCapacityUnits: GetEnv.int('AWS_DYNAMO_DB_READ_CAPACITY_UNITS'),
-      writeCapacityUnits: GetEnv.int('AWS_DYNAMO_DB_WRITE_CAPACITY_UNITS')
+      writeCapacityUnits: GetEnv.int('AWS_DYNAMO_DB_WRITE_CAPACITY_UNITS'),
+      limit: GetEnv.int('AWS_DYNAMO_DB_LIMIT')
     };
   }
 

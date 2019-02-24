@@ -18,6 +18,11 @@ provider:
     AWS_SECRET: ${env:AWS_KEY}
     AWS_ACCOUNT_ID: ${env:AWS_ACCOUNT_ID}
     AWS_REGION_CODE: ${env:AWS_REGION_CODE}
+    AWS_API_VERSION: ${env:AWS_API_VERSION}
+
+    AWS_DYNAMO_DB_READ_CAPACITY_UNITS: ${env:AWS_DYNAMO_DB_READ_CAPACITY_UNITS}
+    AWS_DYNAMO_DB_WRITE_CAPACITY_UNITS: ${env:AWS_DYNAMO_DB_WRITE_CAPACITY_UNITS}
+    AWS_DYNAMO_DB_LIMIT: ${env:AWS_DYNAMO_DB_LIMIT}
 
     ENVIRONMENT: ${env:ENVIRONMENT}
 
@@ -27,6 +32,9 @@ provider:
     PORT: ${env:PORT}
 
     SERVERLESS_NAME: ${env:SERVERLESS_NAME}
+
+functions:
+  - ${file(./src/context/v1/subscriptions/serverless.yml)}
 
 resources:
   Resources:

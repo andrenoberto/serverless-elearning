@@ -1,0 +1,17 @@
+getSubscriptions:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-getSubscriptions
+  events:
+    - http:
+        path: api/v1/subscriptions
+        method: GET
+        cors: true
+
+getUserByUuid:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-getUserByUuid
+  events:
+    - http:
+        path: api/v1/subscriptions/{uuid}
+        method: GET
+        cors: true
