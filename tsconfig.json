@@ -9,6 +9,9 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "paths": {
+      "@api/*": [
+        "./src/context/*"
+      ],
       "@config/*": [
         "./src/configuration/*"
       ],
