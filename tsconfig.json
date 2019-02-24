@@ -9,8 +9,17 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "paths": {
+      "@config/*": [
+        "./src/configuration/*"
+      ],
+      "@db/*": [
+        "./src/db/*"
+      ],
       "@libs/*": [
         "./src/libs/*"
+      ],
+      "@models/*": [
+        "./src/models/*"
       ],
       "@src/*": [
         "./src/*"
