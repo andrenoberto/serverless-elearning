@@ -6,9 +6,9 @@ export class Environment {
   public static get aws(): IConfigAWS {
     return {
       apiVersion: GetEnv.string('AWS_API_VERSION'),
-      key: GetEnv.string('AWS_KEY'),
+      accessKeyId: GetEnv.string('AWS_KEY'),
       region: GetEnv.string('AWS_REGION_CODE'),
-      secret: GetEnv.string('AWS_SECRET')
+      secretAccessKey: GetEnv.string('AWS_SECRET')
     };
   }
 
