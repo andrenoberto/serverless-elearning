@@ -1,10 +1,10 @@
-import {CreateTable} from '@db/migrations/create-table';
+import {Table} from '@db/tables/table';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
 
-export class CreateSubscriptionTable extends CreateTable implements IMigration {
+export class PlanTable extends Table implements IMigration {
   private readonly tableName: string;
 
-  constructor({tableName} = {tableName: 'Subscriptions'}) {
+  constructor({tableName} = {tableName: 'Plans'}) {
     super();
     this.tableName = tableName;
   }
@@ -32,12 +32,12 @@ export class CreateSubscriptionTable extends CreateTable implements IMigration {
           AttributeType: 'S'
         },
         {
-          AttributeName: 'plans',
-          AttributeType: 'SS'
+          AttributeName: 'price',
+          AttributeType: 'N'
         },
         {
-          AttributeName: 'accessGroup',
-          AttributeType: 'SS'
+          AttributeName: 'days',
+          AttributeType: 'N'
         }
       ],
       ProvisionedThroughput: {
@@ -54,7 +54,7 @@ export class CreateSubscriptionTable extends CreateTable implements IMigration {
           KeyType: 'RANGE'
         }
       ],
-      TableName: this.tableName
+      TableName: 'Plans'
     };
     this.createTable(params);
   }
