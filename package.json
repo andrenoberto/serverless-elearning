@@ -9,7 +9,7 @@
     "start-debug": "npm run build && SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline -s dev",
     "test": "clear && npm run test:tslint && npm run test:mdlint",
     "test:tslint": "tslint --project tsconfig.json",
-    "test:mdlint": "npx remark .",
+    "test:mdlint": "npx remark . .github/",
     "deploy": "npm run build && sls deploy --force"
   },
   "repository": {
