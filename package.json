@@ -5,12 +5,12 @@
   "main": "src/app.js",
   "scripts": {
     "build": "tsc -pretty -p .",
+    "deploy": "npm run build && sls deploy --force",
     "start-offline": "npm run build && serverless offline start",
     "start-debug": "npm run build && SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline -s dev",
     "test": "clear && npm run test:tslint && npm run test:mdlint",
     "test:tslint": "tslint --project tsconfig.json",
-    "test:mdlint": "npx remark . .github/",
-    "deploy": "npm run build && sls deploy --force"
+    "test:mdlint": "npx remark . .github/"
   },
   "repository": {
     "type": "git",
@@ -36,6 +36,7 @@
     "express": "^4.16.4",
     "getenv": "^0.7.0",
     "joi": "^14.3.1",
+    "module-alias": "^2.2.0",
     "serverless": "^1.37.1",
     "serverless-http": "^1.9.0"
   },
