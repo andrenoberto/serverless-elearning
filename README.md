@@ -17,6 +17,7 @@ API-First Headless virtual learning environment built on top of AWS serverless a
 *   API Gateway
 *   Cognito
 *   CloudFormation
+*   DynamoDB
 *   Lambda
 *   SES
 ## <a name="quick-start"></a>Quick Start

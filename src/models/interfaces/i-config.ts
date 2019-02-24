@@ -6,9 +6,9 @@ export interface IConfig {
 
 export interface IConfigAWS {
   apiVersion: string;
-  key: string;
+  accessKeyId: string;
   region: string;
-  secret: string;
+  secretAccessKey: string;
 }
 
 export interface IConfigDynamoDB {
