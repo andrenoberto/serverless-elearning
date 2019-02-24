@@ -1,12 +1,12 @@
 import {ISubscription} from '@models/interfaces/i-subscription';
 
 export class Subscription {
-  private uuid: string;
-  private active: boolean;
-  private name: string;
-  private description: string;
-  private plans: Array<string>;
-  private accessGroup: Array<string>;
+  public uuid: string;
+  public active: boolean;
+  public name: string;
+  public description: string;
+  public plans: Array<string>;
+  public accessGroup: Array<string>;
 
   constructor(subscription: ISubscription) {
     this.uuid = subscription.uuid;
