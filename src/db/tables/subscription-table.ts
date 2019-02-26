@@ -1,7 +1,9 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+import * as uuidv4 from 'uuid/v4';
 
 import {Table} from '@db/tables/table';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
+import {ISubscription} from '@models/interfaces/i-subscription';
 
 export class SubscriptionTable extends Table implements IMigration {
   private readonly tableName: string;
@@ -11,8 +13,42 @@ export class SubscriptionTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
+  public add(subscription: ISubscription, callback): void {
+    const tableItem = {};
+    tableItem[this.tableName] = [{
+      PutRequest: {
+        Item: {
+          'Uuid': {
+            S: uuidv4()
+          },
+          'Active': {
+            BOOL: subscription.active
+          },
+          'Name': {
+            S: subscription.name
+          },
+          'Description': {
+            S: subscription.description
+          },
+          'Plans': {
+            SS: subscription.plans
+          },
+          'AccessGroup': {
+            SS: subscription.accessGroup
+          }
+        }
+      }
+    }];
+    const params: DynamoDB.Types.BatchWriteItemInput = {
+      RequestItems: {
+        ...tableItem
+      }
+    };
+    this.batchWriteItem(params, callback);
+  }
+
   public get(callback): void {
-    const params = {
+    const params: DynamoDB.Types.ScanInput = {
       ExpressionAttributeNames: {
         '#id': 'Uuid',
         '#act': 'Active',
