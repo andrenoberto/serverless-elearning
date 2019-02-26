@@ -18,26 +18,14 @@ export class Table {
     this.dynamoDB.batchWriteItem(params, callback);
   }
 
-  protected createTable(params: AWS.DynamoDB.Types.CreateTableInput): void {
-    this.dynamoDB.createTable(params, (err, data) => {
-      if (!err) {
-        console.log(data);
-      } else {
-        console.error(err);
-      }
-    });
+  protected createTable(params: AWS.DynamoDB.Types.CreateTableInput, callback): void {
+    this.dynamoDB.createTable(params, callback);
   }
 
-  protected deleteTable(tableName: string): void {
+  protected deleteTable(tableName: string, callback): void {
     this.dynamoDB.deleteTable({
       TableName: tableName
-    }, (err, data) => {
-      if (!err) {
-        console.log(data);
-      } else {
-        console.log(err);
-      }
-    });
+    }, callback);
   }
 
   protected getItem(params: AWS.DynamoDB.Types.GetItemInput, callback): void {

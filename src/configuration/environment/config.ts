@@ -10,7 +10,8 @@ export class Config {
     return {
       aws: Environment.aws,
       dynamoDB: Environment.dynamoDB,
-      env: Environment.env
+      env: Environment.env,
+      master: Environment.master
     };
   }
 }

@@ -1,6 +1,6 @@
 import {IConfigDynamoDB} from '@models/interfaces/i-config';
 
 export interface IMigration {
-  up(params: IConfigDynamoDB): void;
-  down(): void;
+  up(callback, params: IConfigDynamoDB): void;
+  down(callback): void;
 }

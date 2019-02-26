@@ -14,8 +14,16 @@ router.get('/:uuid', (req, res) => {
   controller.find(req, res);
 });
 
-router.post('/', SubscriptionControllerValidator.newSubscription, (req, res, next) => {
-  controller.add(req, res, next);
+router.post('/', SubscriptionControllerValidator.newSubscription, (req, res) => {
+  controller.add(req, res);
+});
+
+router.post('/down', SubscriptionControllerValidator.tableManagementSubscription, (req, res) => {
+  controller.down(req, res);
+});
+
+router.post('/up', SubscriptionControllerValidator.tableManagementSubscription, (req, res) => {
+  controller.up(req, res);
 });
 
 export default router;
