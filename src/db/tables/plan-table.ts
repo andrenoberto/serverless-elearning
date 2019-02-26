@@ -11,11 +11,11 @@ export class PlanTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
-  public down(): void {
-    this.deleteTable(this.tableName);
+  public down(callback): void {
+    this.deleteTable(this.tableName, callback);
   }
 
-  public up({
+  public up(callback, {
               readCapacityUnits: ReadCapacityUnits,
               writeCapacityUnits: WriteCapacityUnits
             }: IConfigDynamoDB = this.config.dynamoDB): void {
@@ -24,26 +24,6 @@ export class PlanTable extends Table implements IMigration {
         {
           AttributeName: 'Uuid',
           AttributeType: 'S'
-        },
-        {
-          AttributeName: 'Active',
-          AttributeType: 'BOOL'
-        },
-        {
-          AttributeName: 'Name',
-          AttributeType: 'S'
-        },
-        {
-          AttributeName: 'Description',
-          AttributeType: 'S'
-        },
-        {
-          AttributeName: 'Price',
-          AttributeType: 'N'
-        },
-        {
-          AttributeName: 'Days',
-          AttributeType: 'N'
         }
       ],
       ProvisionedThroughput: {
@@ -54,14 +34,10 @@ export class PlanTable extends Table implements IMigration {
         {
           AttributeName: 'Uuid',
           KeyType: 'HASH'
-        },
-        {
-          AttributeName: 'Name',
-          KeyType: 'RANGE'
         }
       ],
       TableName: 'Plans'
     };
-    this.createTable(params);
+    this.createTable(params, callback);
   }
 }

@@ -2,6 +2,7 @@ export interface IConfig {
   aws: IConfigAWS;
   dynamoDB: IConfigDynamoDB;
   env: IConfigEnv;
+  master: IConfigMasterKey;
 }
 
 export interface IConfigAWS {
@@ -20,4 +21,8 @@ export interface IConfigDynamoDB {
 export interface IConfigEnv {
   serverless: string;
   stage: string;
+}
+
+export interface IConfigMasterKey {
+  key: string;
 }

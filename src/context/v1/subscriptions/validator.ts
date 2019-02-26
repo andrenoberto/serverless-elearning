@@ -8,12 +8,32 @@ export class SubscriptionControllerValidator {
         active: Joi.boolean().required(),
         name: Joi.string().required(),
         description: Joi.string(),
-        plans: Joi.array().required(),
-        accessGroup: Joi.array().required()
+        plans: Joi.array().items(Joi.string().min(1).required()).required(),
+        accessGroup: Joi.array().items(Joi.string().min(1).required()).required()
       }).required(),
       {
         abortEarly: false,
-        allowUnknown: true,
+        allowUnknown: true
+      }
+    )
+      .then(() => next())
+      .catch(err => {
+        console.error(JSON.stringify(err));
+        next(err);
+      });
+  }
+
+  public static tableManagementSubscription(req, res, next): Promise<Error> {
+    return Joi.validate(
+      req.body,
+      Joi.object().keys({
+        key: Joi.string()
+          .uuid({version: ['uuidv4']})
+          .required()
+      }).required(),
+      {
+        abortEarly: false,
+        allowUnknown: true
       }
     )
       .then(() => next())

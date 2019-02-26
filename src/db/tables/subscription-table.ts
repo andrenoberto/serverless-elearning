@@ -1,5 +1,5 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
-import * as uuidv4 from 'uuid/v4';
+import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
@@ -64,8 +64,8 @@ export class SubscriptionTable extends Table implements IMigration {
     this.scanTable(params, callback);
   }
 
-  public down(): void {
-    this.deleteTable(this.tableName);
+  public down(callback): void {
+    this.deleteTable(this.tableName, callback);
   }
 
   public find(uuid: string, callback): void {
@@ -80,7 +80,7 @@ export class SubscriptionTable extends Table implements IMigration {
     this.getItem(params, callback);
   }
 
-  public up({
+  public up(callback, {
               readCapacityUnits: ReadCapacityUnits,
               writeCapacityUnits: WriteCapacityUnits
             }: IConfigDynamoDB = this.config.dynamoDB): void {
@@ -89,26 +89,6 @@ export class SubscriptionTable extends Table implements IMigration {
         {
           AttributeName: 'Uuid',
           AttributeType: 'S'
-        },
-        {
-          AttributeName: 'Active',
-          AttributeType: 'BOOL'
-        },
-        {
-          AttributeName: 'Name',
-          AttributeType: 'S'
-        },
-        {
-          AttributeName: 'Description',
-          AttributeType: 'S'
-        },
-        {
-          AttributeName: 'Plans',
-          AttributeType: 'SS'
-        },
-        {
-          AttributeName: 'AccessGroup',
-          AttributeType: 'SS'
         }
       ],
       ProvisionedThroughput: {
@@ -119,14 +99,10 @@ export class SubscriptionTable extends Table implements IMigration {
         {
           AttributeName: 'Uuid',
           KeyType: 'HASH'
-        },
-        {
-          AttributeName: 'Name',
-          KeyType: 'RANGE'
         }
       ],
       TableName: this.tableName
     };
-    this.createTable(params);
+    this.createTable(params, callback);
   }
 }

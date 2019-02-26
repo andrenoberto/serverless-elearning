@@ -1,23 +1,60 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
+import {Config} from '@config/environment';
 import {SubscriptionTable} from '@db/tables';
 import {SubscriptionFactory} from '@models/factories/subscription-factory';
 import {ISubscriptionGetItemResult, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
 
 export class SubscriptionController {
-  constructor(private readonly subscriptionTable = new SubscriptionTable()) {}
+  constructor(private readonly subscriptionTable = new SubscriptionTable()) {
+  }
 
-  public add(req, res, next): void {
+  public add(req, res): void {
     this.subscriptionTable.add(req.body, (err, data: DynamoDB.Types.BatchWriteItemOutput) => {
       if (!err) {
-        if (data.UnprocessedItems) {
+        if (data && data.UnprocessedItems && Object.keys(data.UnprocessedItems).length > 0) {
           res.status(500).end();
         } else {
           res.status(200).end();
         }
       } else {
         console.error(err);
-        res.status(err.statusCode).end();
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
+  }
+
+  public down(req, res): void {
+    if (SubscriptionController.validateMasterKey(req)) {
+      this.subscriptionTable.down((err, data: DynamoDB.Types.DeleteTableOutput) => {
+        if (!err) {
+          const {TableName: tableName, TableStatus: status} = data.TableDescription;
+          res.json({tableName, status});
+        } else {
+          console.error(err);
+          const {message} = err;
+          res.status(err.statusCode).json({message});
+        }
+      });
+    } else {
+      res.status(403).end();
+    }
+  }
+
+  public find(req, res): void {
+    this.subscriptionTable.find(req.params.uuid, (err, data) => {
+      if (!err) {
+        if (data && Object.keys(data).length > 0) {
+          const result: ISubscriptionGetItemResult = SubscriptionFactory.convertGetItemFromDynamoDB(data);
+          res.json(result.item);
+        } else {
+          res.status(404).end();
+        }
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
       }
     });
   }
@@ -29,24 +66,31 @@ export class SubscriptionController {
         res.json(result);
       } else {
         console.error(err);
-        res.status(err.statusCode).end();
+        const {message} = err;
+        res.status(err.statusCode).json({message});
       }
     });
   }
 
-  public find(req, res): void {
-    this.subscriptionTable.find(req.params.uuid, (err, data) => {
-      if (!err) {
-        if (data && Object.keys(data).length !== 0) {
-          const result: ISubscriptionGetItemResult = SubscriptionFactory.convertGetItemFromDynamoDB(data);
-          res.json(result.item);
+  public up(req, res): void {
+    if (SubscriptionController.validateMasterKey(req)) {
+      this.subscriptionTable.up((err, data: DynamoDB.Types.CreateTableOutput) => {
+        if (!err) {
+          const {TableName: tableName, TableStatus: status} = data.TableDescription;
+          res.json({tableName, status});
         } else {
-          res.status(404).end();
+          console.error(err);
+          const {message} = err;
+          res.status(err.statusCode).json({message});
         }
-      } else {
-        console.error(err);
-        res.status(err.statusCode).end();
-      }
-    });
+      });
+    } else {
+      res.status(403).end();
+    }
+  }
+
+  private static validateMasterKey(req): boolean {
+    const {master} = Config.factory();
+    return req.body.key === master.key;
   }
 }
