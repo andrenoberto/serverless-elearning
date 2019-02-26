@@ -3,15 +3,15 @@ getSubscriptions:
   name: ${self:service}-${self:provider.stage}-getSubscriptions
   events:
     - http:
-        path: api/v1/subscriptions
+        path: api/v1/subscriptions/{uuid}
         method: GET
         cors: true
 
-getUserByUuid:
+addSubscription:
   handler: dist/app.handler
-  name: ${self:service}-${self:provider.stage}-getUserByUuid
+  name: ${self:service}-${self:provider.stage}-addSubscription
   events:
     - http:
-        path: api/v1/subscriptions/{uuid}
-        method: GET
+        path: api/v1/subscriptions
+        method: POST
         cors: true

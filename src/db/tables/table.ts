@@ -14,7 +14,11 @@ export class Table {
     });
   }
 
-  protected createTable(params): void {
+  protected batchWriteItem(params: AWS.DynamoDB.Types.BatchWriteItemInput, callback): void {
+    this.dynamoDB.batchWriteItem(params, callback);
+  }
+
+  protected createTable(params: AWS.DynamoDB.Types.CreateTableInput): void {
     this.dynamoDB.createTable(params, (err, data) => {
       if (!err) {
         console.log(data);
@@ -36,11 +40,11 @@ export class Table {
     });
   }
 
-  protected getItem(params, callback): void {
+  protected getItem(params: AWS.DynamoDB.Types.GetItemInput, callback): void {
     this.dynamoDB.getItem(params, callback);
   }
 
-  protected scanTable(params, callback): void {
+  protected scanTable(params: AWS.DynamoDB.Types.ScanInput, callback): void {
     this.dynamoDB.scan(params, callback);
   }
 }

@@ -9,7 +9,7 @@ export class SubscriptionFactory {
     if (getItemOutput && getItemOutput.Item) {
       subscription = {
         uuid: getItemOutput.Item.Uuid.S,
-          active: getItemOutput.Item.Active.BOOL,
+        active: getItemOutput.Item.Active.BOOL,
         name: getItemOutput.Item.Name.S,
         description: getItemOutput.Item.Description.S,
         plans: getItemOutput.Item.Plans.SS,
@@ -20,6 +20,7 @@ export class SubscriptionFactory {
       item: subscription
     };
   }
+
   public static convertScanFromDynamoDB(scanOutput: DynamoDB.Types.ScanOutput): ISubscriptionScanResult {
     const subscriptions: Array<ISubscription> = [];
     scanOutput.Items.forEach((item: IDynamoSubscriptionItem) => {

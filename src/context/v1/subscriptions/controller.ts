@@ -7,6 +7,21 @@ import {ISubscriptionGetItemResult, ISubscriptionScanResult} from '@models/inter
 export class SubscriptionController {
   constructor(private readonly subscriptionTable = new SubscriptionTable()) {}
 
+  public add(req, res, next): void {
+    this.subscriptionTable.add(req.body, (err, data: DynamoDB.Types.BatchWriteItemOutput) => {
+      if (!err) {
+        if (data.UnprocessedItems) {
+          res.status(500).end();
+        } else {
+          res.status(200).end();
+        }
+      } else {
+        console.error(err);
+        res.status(err.statusCode).end();
+      }
+    });
+  }
+
   public get(req, res): void {
     this.subscriptionTable.get((err, data: DynamoDB.Types.ScanOutput) => {
       if (!err) {
