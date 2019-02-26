@@ -1,6 +1,6 @@
 import * as GetEnv from 'getenv';
 
-import {IConfigAWS, IConfigDynamoDB, IConfigEnv} from '@models/interfaces';
+import {IConfigAWS, IConfigDynamoDB, IConfigEnv, IConfigMasterKey} from '@models/interfaces';
 
 export class Environment {
   public static get aws(): IConfigAWS {
@@ -24,6 +24,12 @@ export class Environment {
     return {
       serverless: GetEnv.string('SERVERLESS_NAME'),
       stage: GetEnv.string('ENVIRONMENT')
+    };
+  }
+
+  public static get master(): IConfigMasterKey {
+    return {
+      key: GetEnv.string('MASTER_KEY')
     };
   }
 }
