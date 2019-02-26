@@ -38,7 +38,8 @@
     "joi": "^14.3.1",
     "module-alias": "^2.2.0",
     "serverless": "^1.37.1",
-    "serverless-http": "^1.9.0"
+    "serverless-http": "^1.9.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.19",
