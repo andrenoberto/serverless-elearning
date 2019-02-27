@@ -3,7 +3,7 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {Config} from '@config/environment';
 import {SubscriptionTable} from '@db/tables';
 import {SubscriptionFactory} from '@models/factories/subscription-factory';
-import {ISubscriptionGetItemResult, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
+import {ISubscription, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
 
 export class SubscriptionController {
   constructor(private readonly subscriptionTable = new SubscriptionTable()) {
@@ -46,8 +46,8 @@ export class SubscriptionController {
     this.subscriptionTable.find(req.params.uuid, (err, data) => {
       if (!err) {
         if (data && Object.keys(data).length > 0) {
-          const result: ISubscriptionGetItemResult = SubscriptionFactory.convertGetItemFromDynamoDB(data);
-          res.json(result.item);
+          const result: ISubscription = SubscriptionFactory.convertGetItemFromDynamoDB(data);
+          res.json(result);
         } else {
           res.status(404).end();
         }
@@ -87,6 +87,19 @@ export class SubscriptionController {
     } else {
       res.status(403).end();
     }
+  }
+
+  public update(req, res): void {
+    this.subscriptionTable.update(req.body, (err, data: DynamoDB.Types.UpdateItemOutput) => {
+      if (!err) {
+        const result = SubscriptionFactory.convertUpdateItemFromDynamoDB(data);
+        res.json(result);
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
   }
 
   private static validateMasterKey(req): boolean {

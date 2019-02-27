@@ -26,4 +26,8 @@ router.post('/up', SubscriptionControllerValidator.tableManagementSubscription, 
   controller.up(req, res);
 });
 
+router.put('/', SubscriptionControllerValidator.updateSubscription, (req, res) => {
+  controller.update(req, res);
+});
+
 export default router;

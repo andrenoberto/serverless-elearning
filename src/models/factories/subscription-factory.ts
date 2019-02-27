@@ -1,10 +1,10 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
 import {IDynamoSubscriptionItem} from '@db/interfaces';
-import {ISubscription, ISubscriptionGetItemResult, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
+import {ISubscription, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
 
 export class SubscriptionFactory {
-  public static convertGetItemFromDynamoDB(getItemOutput: DynamoDB.Types.GetItemOutput): ISubscriptionGetItemResult {
+  public static convertGetItemFromDynamoDB(getItemOutput: DynamoDB.Types.GetItemOutput): ISubscription {
     let subscription: ISubscription = {};
     if (getItemOutput && getItemOutput.Item) {
       subscription = {
@@ -16,9 +16,7 @@ export class SubscriptionFactory {
         accessGroup: getItemOutput.Item.AccessGroup.SS
       };
     }
-    return {
-      item: subscription
-    };
+    return subscription;
   }
 
   public static convertScanFromDynamoDB(scanOutput: DynamoDB.Types.ScanOutput): ISubscriptionScanResult {
@@ -39,5 +37,20 @@ export class SubscriptionFactory {
       lastEvaluatedKey: scanOutput.LastEvaluatedKey,
       items: subscriptions
     };
+  }
+
+  public static convertUpdateItemFromDynamoDB(updateItemOutput: DynamoDB.Types.UpdateItemOutput): ISubscription {
+    let subscription: ISubscription = {};
+    if (updateItemOutput && updateItemOutput.Attributes) {
+      subscription = {
+        uuid: updateItemOutput.Attributes.Uuid.S,
+        active: updateItemOutput.Attributes.Active.BOOL,
+        name: updateItemOutput.Attributes.Name.S,
+        description: updateItemOutput.Attributes.Description.S,
+        plans: updateItemOutput.Attributes.Plans.SS,
+        accessGroup: updateItemOutput.Attributes.AccessGroup.SS
+      };
+    }
+    return subscription;
   }
 }

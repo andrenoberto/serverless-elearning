@@ -2,6 +2,7 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
+import {toPascalCase} from '@libs/utils';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
 import {ISubscription} from '@models/interfaces/i-subscription';
 
@@ -50,14 +51,14 @@ export class SubscriptionTable extends Table implements IMigration {
   public get(callback): void {
     const params: DynamoDB.Types.ScanInput = {
       ExpressionAttributeNames: {
-        '#id': 'Uuid',
-        '#act': 'Active',
-        '#name': 'Name',
-        '#desc': 'Description',
-        '#plan': 'Plans',
-        '#aG': 'AccessGroup'
+        '#U': 'Uuid',
+        '#A': 'Active',
+        '#N': 'Name',
+        '#D': 'Description',
+        '#P': 'Plans',
+        '#AG': 'AccessGroup'
       },
-      ProjectionExpression: '#id, #act, #name, #desc, #plan, #aG',
+      ProjectionExpression: '#U, #A, #N, #D, #P, #AG',
       Limit: this.config.dynamoDB.limit,
       TableName: this.tableName
     };
@@ -104,5 +105,51 @@ export class SubscriptionTable extends Table implements IMigration {
       TableName: this.tableName
     };
     this.createTable(params, callback);
+  }
+
+  public update(subscription: ISubscription, callback): void {
+    const params: DynamoDB.Types.UpdateItemInput = {
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {},
+      Key: {
+        'Uuid': {
+          S: subscription.uuid
+        }
+      },
+      ReturnValues: 'ALL_NEW',
+      TableName: this.tableName,
+      UpdateExpression: 'SET'
+    };
+    for (const [key, value] of Object.entries(subscription)) {
+      if (key === 'uuid') {
+        continue;
+      }
+      const attributeName = `#${key.toUpperCase()}`;
+      const attributeValue = `:${key.toLowerCase()}`;
+      params.ExpressionAttributeNames[attributeName] = toPascalCase(key);
+      switch (typeof value) {
+        case 'boolean':
+          params.ExpressionAttributeValues[attributeValue] = {
+            BOOL: value
+          };
+          break;
+        case 'object':
+          params.ExpressionAttributeValues[attributeValue] = {
+            SS: value
+          };
+          break;
+        case 'string':
+          params.ExpressionAttributeValues[attributeValue] = {
+            S: value
+          };
+          break;
+      }
+      if (params.UpdateExpression === 'SET') {
+        params.UpdateExpression += ` ${attributeName} = ${attributeValue}`;
+      } else {
+        params.UpdateExpression += `, ${attributeName} = ${attributeValue}`;
+      }
+    }
+    this.updateItem(params, callback);
   }
 }
