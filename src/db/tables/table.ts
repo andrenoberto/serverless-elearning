@@ -35,4 +35,8 @@ export class Table {
   protected scanTable(params: AWS.DynamoDB.Types.ScanInput, callback): void {
     this.dynamoDB.scan(params, callback);
   }
+
+  protected updateItem(params: AWS.DynamoDB.Types.UpdateItemInput, callback): void {
+    this.dynamoDB.updateItem(params, callback);
+  }
 }

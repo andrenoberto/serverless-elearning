@@ -42,4 +42,27 @@ export class SubscriptionControllerValidator {
         next(err);
       });
   }
+
+  public static updateSubscription(req, res, next): Promise<Error> {
+    return Joi.validate(
+      req.body,
+      Joi.object().keys({
+        uuid: Joi.string().uuid().required(),
+        active: Joi.boolean(),
+        name: Joi.string(),
+        description: Joi.string(),
+        plans: Joi.array().items(Joi.string().min(1).required()),
+        accessGroup: Joi.array().items(Joi.string().min(1).required())
+      }).required(),
+      {
+        abortEarly: false,
+        allowUnknown: true
+      }
+    )
+      .then(() => next())
+      .catch(err => {
+        console.error(JSON.stringify(err));
+        next(err);
+      });
+  }
 }

@@ -37,3 +37,12 @@ upTableSubscription:
         path: api/v1/subscriptions/up
         method: POST
         cors: true
+
+updateSubscription:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-updateSubscription
+  events:
+    - http:
+        path: api/v1/subscriptions
+        method: PUT
+        cors: true

@@ -9,10 +9,6 @@ export interface ISubscription {
   accessGroup?: Array<string>;
 }
 
-export interface ISubscriptionGetItemResult {
-  item?: ISubscription;
-}
-
 export interface ISubscriptionScanResult {
   count?: number;
   scannedCount?: number;
