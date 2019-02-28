@@ -36,17 +36,29 @@ npm install
 yarn
 ```
 
-2.  **Run TSLint:**
+2.  **Set your environment variables:**
+
+  Rename the example environment variables file from
+```
+.env.example
+```
+  To
+```
+.env
+```
+After this, set up the variables inside this file with the appropriated values.
+
+3.  **Run TSLint:**
 ```bash
 yarn test
 ```
 
-3.  **Offline development server:**
+4.  **Offline development server:**
 ```bash
 yarn start-offline
 ```
 
-4.  **Deploy your code to AWS:**
+5.  **Deploy your code to AWS:**
 ```bash
 yarn deploy
 ```
