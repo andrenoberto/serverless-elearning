@@ -22,6 +22,10 @@ export class Table {
     this.dynamoDB.createTable(params, callback);
   }
 
+  protected deleteItem(params: AWS.DynamoDB.Types.DeleteItemInput, callback): void {
+    this.dynamoDB.deleteItem(params, callback);
+  }
+
   protected deleteTable(tableName: string, callback): void {
     this.dynamoDB.deleteTable({
       TableName: tableName
@@ -30,6 +34,10 @@ export class Table {
 
   protected getItem(params: AWS.DynamoDB.Types.GetItemInput, callback): void {
     this.dynamoDB.getItem(params, callback);
+  }
+
+  protected putItem(params: AWS.DynamoDB.Types.PutItemInput, callback): void {
+    this.dynamoDB.putItem(params, (err, data) => callback(err, data, params));
   }
 
   protected scanTable(params: AWS.DynamoDB.Types.ScanInput, callback): void {

@@ -9,13 +9,25 @@ export class SubscriptionController {
   constructor(private readonly subscriptionTable = new SubscriptionTable()) {
   }
 
-  public add(req, res): void {
-    this.subscriptionTable.add(req.body, (err, data: DynamoDB.Types.BatchWriteItemOutput) => {
+  public batchDelete(req, res): void {
+    this.subscriptionTable.batchDelete(req.body.uuids, (err, data: DynamoDB.Types.BatchWriteItemOutput) => {
       if (!err) {
-        if (data && data.UnprocessedItems && Object.keys(data.UnprocessedItems).length > 0) {
-          res.status(500).end();
-        } else {
+        res.json(data);
+      } else {
+        console.log(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
+  }
+
+  public delete(req, res): void {
+    this.subscriptionTable.delete(req.params.uuid, (err, data: DynamoDB.Types.DeleteItemOutput) => {
+      if (!err) {
+        if (Object.keys(data).length > 0) {
           res.status(200).end();
+        } else {
+          res.status(204).end();
         }
       } else {
         console.error(err);
@@ -69,7 +81,21 @@ export class SubscriptionController {
         const {message} = err;
         res.status(err.statusCode).json({message});
       }
-    });
+    }, req.params.exclusiveStartKey || null);
+  }
+
+  public put(req, res): void {
+    this.subscriptionTable.put(req.body,
+      (err, data: DynamoDB.Types.PutItemOutput, putInput: DynamoDB.Types.PutItemInput) => {
+        if (!err) {
+          const result: ISubscription = SubscriptionFactory.convertPutItemFromDynamoDB(putInput);
+          res.json(result);
+        } else {
+          console.error(err);
+          const {message} = err;
+          res.status(err.statusCode).json({message});
+        }
+      });
   }
 
   public up(req, res): void {

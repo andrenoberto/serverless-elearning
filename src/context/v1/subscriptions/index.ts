@@ -6,7 +6,19 @@ import {SubscriptionController} from './controller';
 const controller = new SubscriptionController();
 const router = Express.Router();
 
+router.delete('/', SubscriptionControllerValidator.batchDeleteSubscription, (req, res) => {
+  controller.batchDelete(req, res);
+});
+
+router.delete('/:uuid', (req, res) => {
+  controller.delete(req, res);
+});
+
 router.get('/', (req, res) => {
+  controller.get(req, res);
+});
+
+router.get('/next/:exclusiveStartKey', (req, res) => {
   controller.get(req, res);
 });
 
@@ -14,8 +26,8 @@ router.get('/:uuid', (req, res) => {
   controller.find(req, res);
 });
 
-router.post('/', SubscriptionControllerValidator.newSubscription, (req, res) => {
-  controller.add(req, res);
+router.post('/', SubscriptionControllerValidator.putSubscription, (req, res) => {
+  controller.put(req, res);
 });
 
 router.post('/down', SubscriptionControllerValidator.tableManagementSubscription, (req, res) => {

@@ -19,6 +19,21 @@ export class SubscriptionFactory {
     return subscription;
   }
 
+  public static convertPutItemFromDynamoDB(putInput: DynamoDB.Types.PutItemInput): ISubscription {
+    let subscription: ISubscription = {};
+    if (putInput && putInput.Item) {
+      subscription = {
+        uuid: putInput.Item.Uuid.S,
+        active: putInput.Item.Active.BOOL,
+        name: putInput.Item.Name.S,
+        description: putInput.Item.Description.S,
+        plans: putInput.Item.Plans.SS,
+        accessGroup: putInput.Item.AccessGroup.SS
+      };
+    }
+    return subscription;
+  }
+
   public static convertScanFromDynamoDB(scanOutput: DynamoDB.Types.ScanOutput): ISubscriptionScanResult {
     const subscriptions: Array<ISubscription> = [];
     scanOutput.Items.forEach((item: IDynamoSubscriptionItem) => {
