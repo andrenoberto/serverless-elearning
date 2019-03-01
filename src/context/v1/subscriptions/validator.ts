@@ -1,7 +1,25 @@
 import * as Joi from 'joi';
 
 export class SubscriptionControllerValidator {
-  public static newSubscription(req, res, next): Promise<Error> {
+  public static batchDeleteSubscription(req, res, next): Promise<Error> {
+    return Joi.validate(
+      req.body,
+      Joi.object().keys({
+        uuids: Joi.array().items(Joi.string().uuid().required()).required()
+      }).required(),
+      {
+        abortEarly: false,
+        allowUnknown: true
+      }
+    )
+      .then(() => next())
+      .catch(err => {
+        console.error(JSON.stringify(err));
+        next(err);
+      });
+  }
+
+  public static putSubscription(req, res, next): Promise<Error> {
     return Joi.validate(
       req.body,
       Joi.object().keys({

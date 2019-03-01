@@ -1,10 +1,10 @@
-addSubscription:
+deleteSubscription:
   handler: dist/app.handler
-  name: ${self:service}-${self:provider.stage}-addSubscription
+  name: ${self:service}-${self:provider.stage}-deleteSubscription
   events:
     - http:
-        path: api/v1/subscriptions
-        method: POST
+        path: api/v1/subscriptions/{proxy+}
+        method: DELETE
         cors: true
 
 downTableSubscription:
@@ -16,17 +16,22 @@ downTableSubscription:
         method: POST
         cors: true
 
-getSubscriptions:
+getSubscription:
   handler: dist/app.handler
   name: ${self:service}-${self:provider.stage}-getSubscriptions
   events:
     - http:
-        path: api/v1/subscriptions
+        path: api/v1/subscriptions/{proxy+}
         method: GET
         cors: true
+
+putSubscription:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-addSubscription
+  events:
     - http:
-        path: api/v1/subscriptions/{uuid}
-        method: GET
+        path: api/v1/subscriptions
+        method: POST
         cors: true
 
 upTableSubscription:

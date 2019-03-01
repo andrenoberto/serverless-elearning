@@ -14,41 +14,26 @@ export class SubscriptionTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
-  public add(subscription: ISubscription, callback): void {
-    const tableItem = {};
-    tableItem[this.tableName] = [{
-      PutRequest: {
-        Item: {
-          'Uuid': {
-            S: uuidv4()
-          },
-          'Active': {
-            BOOL: subscription.active
-          },
-          'Name': {
-            S: subscription.name
-          },
-          'Description': {
-            S: subscription.description
-          },
-          'Plans': {
-            SS: subscription.plans
-          },
-          'AccessGroup': {
-            SS: subscription.accessGroup
+  public batchDelete(items: Array<string>, callback): void {
+    const params: DynamoDB.Types.BatchWriteItemInput = {
+      RequestItems: {}
+    };
+    params.RequestItems[this.tableName] = [];
+    items.forEach((item: string) => {
+      params.RequestItems[this.tableName].push({
+        DeleteRequest: {
+          Key: {
+            'Uuid': {
+              S: item
+            }
           }
         }
-      }
-    }];
-    const params: DynamoDB.Types.BatchWriteItemInput = {
-      RequestItems: {
-        ...tableItem
-      }
-    };
+      });
+    });
     this.batchWriteItem(params, callback);
   }
 
-  public get(callback): void {
+  public get(callback, exclusiveStartKey = null): void {
     const params: DynamoDB.Types.ScanInput = {
       ExpressionAttributeNames: {
         '#U': 'Uuid',
@@ -62,7 +47,27 @@ export class SubscriptionTable extends Table implements IMigration {
       Limit: this.config.dynamoDB.limit,
       TableName: this.tableName
     };
+    if (exclusiveStartKey) {
+      params.ExclusiveStartKey = {
+        'Uuid': {
+          S: exclusiveStartKey
+        }
+      };
+    }
     this.scanTable(params, callback);
+  }
+
+  public delete(uuid: string, callback): void {
+    const params: DynamoDB.Types.DeleteItemInput = {
+      Key: {
+        'Uuid': {
+          S: uuid
+        }
+      },
+      ReturnValues: 'ALL_OLD',
+      TableName: this.tableName
+    };
+    this.deleteItem(params, callback);
   }
 
   public down(callback): void {
@@ -79,6 +84,33 @@ export class SubscriptionTable extends Table implements IMigration {
       TableName: this.tableName
     };
     this.getItem(params, callback);
+  }
+
+  public put(subscription: ISubscription, callback): void {
+    const params: DynamoDB.Types.PutItemInput = {
+      Item: {
+        'Uuid': {
+          S: uuidv4()
+        },
+        'Active': {
+          BOOL: subscription.active
+        },
+        'Name': {
+          S: subscription.name
+        },
+        'Description': {
+          S: subscription.description
+        },
+        'Plans': {
+          SS: subscription.plans
+        },
+        'AccessGroup': {
+          SS: subscription.accessGroup
+        }
+      },
+      TableName: this.tableName
+    };
+    this.putItem(params, callback);
   }
 
   public up(callback, {
