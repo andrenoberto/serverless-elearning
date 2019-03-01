@@ -12,7 +12,8 @@ export class SubscriptionFactory {
         active: getItemOutput.Item.Active.BOOL,
         name: getItemOutput.Item.Name.S,
         description: getItemOutput.Item.Description.S,
-        plans: getItemOutput.Item.Plans.SS,
+        days: parseInt(getItemOutput.Item.Days.N, 10),
+        price: parseFloat(getItemOutput.Item.Price.N),
         accessGroup: getItemOutput.Item.AccessGroup.SS
       };
     }
@@ -27,7 +28,8 @@ export class SubscriptionFactory {
         active: putInput.Item.Active.BOOL,
         name: putInput.Item.Name.S,
         description: putInput.Item.Description.S,
-        plans: putInput.Item.Plans.SS,
+        days: parseInt(putInput.Item.Days.N, 10),
+        price: parseFloat(putInput.Item.Price.N),
         accessGroup: putInput.Item.AccessGroup.SS
       };
     }
@@ -42,7 +44,8 @@ export class SubscriptionFactory {
         active: item.Active.BOOL,
         name: item.Name.S,
         description: item.Description.S,
-        plans: item.Plans.SS,
+        days: parseInt(item.Days.N, 10),
+        price: parseFloat(item.Price.N),
         accessGroup: item.AccessGroup.SS
       });
     });
@@ -62,7 +65,8 @@ export class SubscriptionFactory {
         active: updateItemOutput.Attributes.Active.BOOL,
         name: updateItemOutput.Attributes.Name.S,
         description: updateItemOutput.Attributes.Description.S,
-        plans: updateItemOutput.Attributes.Plans.SS,
+        days: parseInt(updateItemOutput.Attributes.Days.N, 10),
+        price: parseFloat(updateItemOutput.Attributes.Price.N),
         accessGroup: updateItemOutput.Attributes.AccessGroup.SS
       };
     }

@@ -11,8 +11,11 @@ export interface IDynamoSubscriptionItem {
   Description?: {
     S: string
   };
-  Plans?: {
-    SS: Array<string>
+  Days?: {
+    N: string
+  };
+  Price?: {
+    N: string
   };
   AccessGroup?: {
     SS: Array<string>
