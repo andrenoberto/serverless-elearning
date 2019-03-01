@@ -118,7 +118,7 @@ export class SubscriptionController {
   public update(req, res): void {
     this.subscriptionTable.update(req.body, (err, data: DynamoDB.Types.UpdateItemOutput) => {
       if (!err) {
-        const result = SubscriptionFactory.convertUpdateItemFromDynamoDB(data);
+        const result: ISubscription = SubscriptionFactory.convertUpdateItemFromDynamoDB(data);
         res.json(result);
       } else {
         console.error(err);
