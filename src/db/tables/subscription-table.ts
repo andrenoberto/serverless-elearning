@@ -1,15 +1,15 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
-import {Table} from '@db/tables/table';
-import {toPascalCase} from '@libs/utils';
-import {IConfigDynamoDB, IMigration} from '@models/interfaces';
-import {ISubscription} from '@models/interfaces/i-subscription';
+import { Table } from '@db/tables/table';
+import { toPascalCase } from '@libs/utils';
+import { IConfigDynamoDB, IMigration } from '@models/interfaces';
+import { ISubscription } from '@models/interfaces/i-subscription';
 
 export class SubscriptionTable extends Table implements IMigration {
   private readonly tableName: string;
 
-  constructor({tableName} = {tableName: 'Subscriptions'}) {
+  constructor({ tableName } = { tableName: 'Subscriptions' }) {
     super();
     this.tableName = tableName;
   }
@@ -40,10 +40,11 @@ export class SubscriptionTable extends Table implements IMigration {
         '#A': 'Active',
         '#N': 'Name',
         '#D': 'Description',
-        '#P': 'Plans',
+        '#DS': 'Days',
+        '#P': 'Price',
         '#AG': 'AccessGroup'
       },
-      ProjectionExpression: '#U, #A, #N, #D, #P, #AG',
+      ProjectionExpression: '#U, #A, #N, #D, #DS, #P, #AG',
       Limit: this.config.dynamoDB.limit,
       TableName: this.tableName
     };
@@ -101,8 +102,11 @@ export class SubscriptionTable extends Table implements IMigration {
         'Description': {
           S: subscription.description
         },
-        'Plans': {
-          SS: subscription.plans
+        'Days': {
+          N: subscription.days.toString()
+        },
+        'Price': {
+          N: subscription.price.toString()
         },
         'AccessGroup': {
           SS: subscription.accessGroup
@@ -114,9 +118,9 @@ export class SubscriptionTable extends Table implements IMigration {
   }
 
   public up(callback, {
-              readCapacityUnits: ReadCapacityUnits,
-              writeCapacityUnits: WriteCapacityUnits
-            }: IConfigDynamoDB = this.config.dynamoDB): void {
+    readCapacityUnits: ReadCapacityUnits,
+    writeCapacityUnits: WriteCapacityUnits
+  }: IConfigDynamoDB = this.config.dynamoDB): void {
     const params: DynamoDB.Types.CreateTableInput = {
       AttributeDefinitions: [
         {
@@ -163,6 +167,11 @@ export class SubscriptionTable extends Table implements IMigration {
         case 'boolean':
           params.ExpressionAttributeValues[attributeValue] = {
             BOOL: value
+          };
+          break;
+        case 'number':
+          params.ExpressionAttributeValues[attributeValue] = {
+            N: value.toString()
           };
           break;
         case 'object':

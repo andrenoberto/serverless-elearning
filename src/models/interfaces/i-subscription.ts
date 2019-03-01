@@ -5,7 +5,8 @@ export interface ISubscription {
   active?: boolean;
   name?: string;
   description?: string;
-  plans?: Array<string>;
+  days?: number;
+  price?: number;
   accessGroup?: Array<string>;
 }
 
