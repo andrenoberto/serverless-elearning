@@ -7,7 +7,7 @@ export interface ISubscription {
   description?: string;
   days?: number;
   price?: number;
-  accessGroup?: Array<string>;
+  userGroups?: Array<string>;
 }
 
 export interface ISubscriptionScanResult {
