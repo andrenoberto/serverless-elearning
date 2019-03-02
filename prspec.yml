@@ -10,6 +10,6 @@ phases:
 
   build:
     commands:
-      - npm run audit-dependencies
+      - npm run audit:dependencies
       - npm run test
       - npm run build
