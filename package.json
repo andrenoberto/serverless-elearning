@@ -4,11 +4,11 @@
   "description": "Serverless Learning Environment",
   "main": "src/app.js",
   "scripts": {
-    "audit-dependencies": "npm audit --audit-level high",
+    "audit:dependencies": "yarn audit",
     "build": "tsc -pretty -p .",
     "deploy": "npm run build && sls deploy --force",
-    "start-offline": "npm run build && serverless offline start",
-    "start-debug": "npm run build && SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline -s dev",
+    "start:offline": "npm run build && serverless offline start",
+    "start:debug": "npm run build && SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline -s dev",
     "test": "clear && npm run test:tslint && npm run test:mdlint",
     "test:tslint": "tslint --project tsconfig.json",
     "test:mdlint": "./node_modules/.bin/remark . .github/"
