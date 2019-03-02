@@ -17,7 +17,7 @@ export interface IDynamoSubscriptionItem {
   Price?: {
     N: string
   };
-  AccessGroup?: {
+  UserGroups?: {
     SS: Array<string>
   };
 }

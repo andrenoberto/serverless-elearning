@@ -42,9 +42,9 @@ export class SubscriptionTable extends Table implements IMigration {
         '#D': 'Description',
         '#DS': 'Days',
         '#P': 'Price',
-        '#AG': 'AccessGroup'
+        '#UG': 'UserGroups'
       },
-      ProjectionExpression: '#U, #A, #N, #D, #DS, #P, #AG',
+      ProjectionExpression: '#U, #A, #N, #D, #DS, #P, #UG',
       Limit: this.config.dynamoDB.limit,
       TableName: this.tableName
     };
@@ -108,8 +108,8 @@ export class SubscriptionTable extends Table implements IMigration {
         'Price': {
           N: subscription.price.toString()
         },
-        'AccessGroup': {
-          SS: subscription.accessGroup
+        'UserGroups': {
+          SS: subscription.userGroups
         }
       },
       TableName: this.tableName

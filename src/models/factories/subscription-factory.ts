@@ -14,7 +14,7 @@ export class SubscriptionFactory {
         description: getItemOutput.Item.Description.S,
         days: parseInt(getItemOutput.Item.Days.N, 10),
         price: parseFloat(getItemOutput.Item.Price.N),
-        accessGroup: getItemOutput.Item.AccessGroup.SS
+        userGroups: getItemOutput.Item.UserGroups.SS
       };
     }
     return subscription;
@@ -30,7 +30,7 @@ export class SubscriptionFactory {
         description: putInput.Item.Description.S,
         days: parseInt(putInput.Item.Days.N, 10),
         price: parseFloat(putInput.Item.Price.N),
-        accessGroup: putInput.Item.AccessGroup.SS
+        userGroups: putInput.Item.UserGroups.SS
       };
     }
     return subscription;
@@ -46,7 +46,7 @@ export class SubscriptionFactory {
         description: item.Description.S,
         days: parseInt(item.Days.N, 10),
         price: parseFloat(item.Price.N),
-        accessGroup: item.AccessGroup.SS
+        userGroups: item.UserGroups.SS
       });
     });
     return {
@@ -67,7 +67,7 @@ export class SubscriptionFactory {
         description: updateItemOutput.Attributes.Description.S,
         days: parseInt(updateItemOutput.Attributes.Days.N, 10),
         price: parseFloat(updateItemOutput.Attributes.Price.N),
-        accessGroup: updateItemOutput.Attributes.AccessGroup.SS
+        userGroups: updateItemOutput.Attributes.UserGroups.SS
       };
     }
     return subscription;

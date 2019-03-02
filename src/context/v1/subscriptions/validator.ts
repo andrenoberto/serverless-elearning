@@ -27,7 +27,7 @@ export class SubscriptionControllerValidator {
         name: Joi.string().required(),
         description: Joi.string(),
         plans: Joi.array().items(Joi.string().min(1).required()).required(),
-        accessGroup: Joi.array().items(Joi.string().min(1).required()).required()
+        userGroups: Joi.array().items(Joi.string().min(1).required()).required()
       }).required(),
       {
         abortEarly: false,
@@ -70,7 +70,7 @@ export class SubscriptionControllerValidator {
         name: Joi.string(),
         description: Joi.string(),
         plans: Joi.array().items(Joi.string().min(1).required()),
-        accessGroup: Joi.array().items(Joi.string().min(1).required())
+        userGroups: Joi.array().items(Joi.string().min(1).required())
       }).required(),
       {
         abortEarly: false,
