@@ -3,13 +3,14 @@ phases:
   install:
     commands:
       - npm update -g npm
+      - npm i -g yarn
 
   pre_build:
     commands:
-      - npm install
+      - yarn
 
   build:
     commands:
-      - npm run audit:dependencies
-      - npm run test
-      - npm run build
+      - yarn audit:dependencies
+      - yarn test
+      - yarn build

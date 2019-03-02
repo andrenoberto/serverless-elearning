@@ -3,10 +3,11 @@ node_js:
   - "8.15.0"
 before_install:
   - npm install -g npm
+  - npm i -g yarn
   - cp .env.example .env
 install:
-  - npm install
+  - yarn
 script:
-  - npm run audit:dependencies
-  - npm run test
-  - npm run build
+  - yarn audit:dependencies
+  - yarn test
+  - yarn build
