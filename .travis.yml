@@ -7,6 +7,6 @@ before_install:
 install:
   - npm install
 script:
-  - npm run audit-dependencies
+  - npm run audit:dependencies
   - npm run test
   - npm run build
