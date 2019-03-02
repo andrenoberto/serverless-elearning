@@ -1,0 +1,8 @@
+getUserGroup:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-getUserGroup
+  events:
+    - http:
+        path: api/v1/user-groups/{proxy+}
+        method: GET
+        cors: true

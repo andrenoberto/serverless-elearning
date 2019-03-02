@@ -36,6 +36,7 @@ provider:
 
 functions:
   - ${file(./src/context/v1/subscriptions/serverless.yml)}
+  - ${file(./src/context/v1/user-groups/serverless.yml)}
 
 resources:
   Resources:
