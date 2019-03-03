@@ -18,12 +18,12 @@ router.get('/', (req, res) => {
   controller.get(req, res);
 });
 
-router.get('/next/:exclusiveStartKey', (req, res) => {
-  controller.get(req, res);
-});
-
 router.get('/:uuid', (req, res) => {
   controller.find(req, res);
+});
+
+router.get('/next/:exclusiveStartKey', (req, res) => {
+  controller.get(req, res);
 });
 
 router.post('/', SubscriptionControllerValidator.putSubscription, (req, res) => {

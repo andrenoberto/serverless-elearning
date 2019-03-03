@@ -1,15 +1,15 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
-import { Table } from '@db/tables/table';
-import { toPascalCase } from '@libs/utils';
-import { IConfigDynamoDB, IMigration } from '@models/interfaces';
-import { ISubscription } from '@models/interfaces/i-subscription';
+import {Table} from '@db/tables/table';
+import {toPascalCase} from '@libs/utils';
+import {IConfigDynamoDB, IMigration} from '@models/interfaces';
+import {ISubscription} from '@models/interfaces/i-subscription';
 
 export class SubscriptionTable extends Table implements IMigration {
   private readonly tableName: string;
 
-  constructor({ tableName } = { tableName: 'Subscriptions' }) {
+  constructor({tableName} = {tableName: 'Subscriptions'}) {
     super();
     this.tableName = tableName;
   }
@@ -31,31 +31,6 @@ export class SubscriptionTable extends Table implements IMigration {
       });
     });
     this.batchWriteItem(params, callback);
-  }
-
-  public get(callback, exclusiveStartKey = null): void {
-    const params: DynamoDB.Types.ScanInput = {
-      ExpressionAttributeNames: {
-        '#U': 'Uuid',
-        '#A': 'Active',
-        '#N': 'Name',
-        '#D': 'Description',
-        '#DS': 'Days',
-        '#P': 'Price',
-        '#UG': 'UserGroups'
-      },
-      ProjectionExpression: '#U, #A, #N, #D, #DS, #P, #UG',
-      Limit: this.config.dynamoDB.limit,
-      TableName: this.tableName
-    };
-    if (exclusiveStartKey) {
-      params.ExclusiveStartKey = {
-        'Uuid': {
-          S: exclusiveStartKey
-        }
-      };
-    }
-    this.scanTable(params, callback);
   }
 
   public delete(uuid: string, callback): void {
@@ -85,6 +60,31 @@ export class SubscriptionTable extends Table implements IMigration {
       TableName: this.tableName
     };
     this.getItem(params, callback);
+  }
+
+  public get(callback, exclusiveStartKey = null): void {
+    const params: DynamoDB.Types.ScanInput = {
+      ExpressionAttributeNames: {
+        '#U': 'Uuid',
+        '#A': 'Active',
+        '#N': 'Name',
+        '#D': 'Description',
+        '#DS': 'Days',
+        '#P': 'Price',
+        '#UG': 'UserGroups'
+      },
+      ProjectionExpression: '#U, #A, #N, #D, #DS, #P, #UG',
+      Limit: this.config.dynamoDB.limit,
+      TableName: this.tableName
+    };
+    if (exclusiveStartKey) {
+      params.ExclusiveStartKey = {
+        'Uuid': {
+          S: exclusiveStartKey
+        }
+      };
+    }
+    this.scanTable(params, callback);
   }
 
   public put(subscription: ISubscription, callback): void {
