@@ -15,7 +15,7 @@ API-First Headless virtual learning environment built on top of AWS serverless a
 *   [Contributing](#contributing)
 *   [Licensing](#licensing)
 ## <a name="development-board"></a>Development Board
-*   [Serverless e-Learning Board on Jira](https://github.com/andrenoberto/serverless-elearning)
+*   [Serverless e-Learning Board on Jira](https://serverless-elearning.atlassian.net/projects/SE/issues)
 ## <a name="supported-providers"></a>Supported Providers
 *   AWS
 ## <a name="services-used"></a>Services Used
