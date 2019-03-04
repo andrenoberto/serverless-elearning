@@ -13,7 +13,7 @@ export class UserGroupTable extends Table implements IMigration {
   }
 
   public down(callback): void {
-    // TODO: purge user groups table
+    this.deleteTable(this.tableName, callback);
   }
 
   public find(uuid: string, callback): void {
@@ -49,7 +49,29 @@ export class UserGroupTable extends Table implements IMigration {
     this.scanTable(params, callback);
   }
 
-  public up(callback, params: IConfigDynamoDB): void {
-    // TODO: create user groups table
+  public up(callback, {
+    readCapacityUnits: ReadCapacityUnits,
+    writeCapacityUnits: WriteCapacityUnits
+  }: IConfigDynamoDB = this.config.dynamoDB): void {
+    const params: DynamoDB.Types.CreateTableInput = {
+      AttributeDefinitions: [
+        {
+          AttributeName: 'Uuid',
+          AttributeType: 'S'
+        }
+      ],
+      ProvisionedThroughput: {
+        ReadCapacityUnits,
+        WriteCapacityUnits
+      },
+      KeySchema: [
+        {
+          AttributeName: 'Uuid',
+          KeyType: 'HASH'
+        }
+      ],
+      TableName: this.tableName
+    };
+    this.createTable(params, callback);
   }
 }

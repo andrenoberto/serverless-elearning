@@ -1,7 +1,7 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
-import {Config} from '@config/environment';
 import {SubscriptionTable} from '@db/tables';
+import {validateMasterKey} from '@libs/utils';
 import {SubscriptionFactory} from '@models/factories/subscription-factory';
 import {ISubscription, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
 
@@ -38,7 +38,7 @@ export class SubscriptionController {
   }
 
   public down(req, res): void {
-    if (SubscriptionController.validateMasterKey(req)) {
+    if (validateMasterKey(req)) {
       this.subscriptionTable.down((err, data: DynamoDB.Types.DeleteTableOutput) => {
         if (!err) {
           const {TableName: tableName, TableStatus: status} = data.TableDescription;
@@ -99,7 +99,7 @@ export class SubscriptionController {
   }
 
   public up(req, res): void {
-    if (SubscriptionController.validateMasterKey(req)) {
+    if (validateMasterKey(req)) {
       this.subscriptionTable.up((err, data: DynamoDB.Types.CreateTableOutput) => {
         if (!err) {
           const {TableName: tableName, TableStatus: status} = data.TableDescription;
@@ -126,10 +126,5 @@ export class SubscriptionController {
         res.status(err.statusCode).json({message});
       }
     });
-  }
-
-  private static validateMasterKey(req): boolean {
-    const {master} = Config.factory();
-    return req.body.key === master.key;
   }
 }
