@@ -99,9 +99,6 @@ export class SubscriptionTable extends Table implements IMigration {
         'Name': {
           S: subscription.name
         },
-        'Description': {
-          S: subscription.description
-        },
         'Days': {
           N: subscription.days.toString()
         },
@@ -114,6 +111,9 @@ export class SubscriptionTable extends Table implements IMigration {
       },
       TableName: this.tableName
     };
+    if (subscription.description) {
+      params.Item['Description'] = {S: subscription.description};
+    }
     this.putItem(params, callback);
   }
 

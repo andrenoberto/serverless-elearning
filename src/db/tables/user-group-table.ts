@@ -65,6 +65,9 @@ export class UserGroupTable extends Table implements IMigration {
       },
       TableName: this.tableName
     };
+    if (userGroup.description) {
+      params.Item['Description'] = {S: userGroup.description};
+    }
     this.putItem(params, callback);
   }
 

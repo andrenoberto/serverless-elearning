@@ -1,9 +1,18 @@
-deleteSubscription:
+deleteSubscriptions:
   handler: dist/app.handler
-  name: ${self:service}-${self:provider.stage}-deleteSubscription
+  name: ${self:service}-${self:provider.stage}-deleteSubscriptions
   events:
     - http:
-        path: api/v1/subscriptions/{proxy+}
+        path: api/v1/subscriptions
+        method: DELETE
+        cors: true
+
+deleteSubscriptionByUuid:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-deleteSubscriptionByUuid
+  events:
+    - http:
+        path: api/v1/subscriptions/{uuid}
         method: DELETE
         cors: true
 
@@ -16,30 +25,39 @@ downTableSubscription:
         method: POST
         cors: true
 
-getSubscription:
+getSubscriptionByUuid:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-getSubscriptionByUuid
+  events:
+    - http:
+        path: api/v1/subscriptions/{uuid}
+        method: GET
+        cors: true
+
+getSubscriptions:
   handler: dist/app.handler
   name: ${self:service}-${self:provider.stage}-getSubscriptions
   events:
     - http:
-        path: api/v1/subscriptions/{proxy+}
+        path: api/v1/subscriptions
+        method: GET
+        cors: true
+
+getSubscriptionsNextPage:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-getSubscriptionsNextPage
+  events:
+    - http:
+        path: api/v1/subscriptions/next/{exclusiveStartKey}
         method: GET
         cors: true
 
 putSubscription:
   handler: dist/app.handler
-  name: ${self:service}-${self:provider.stage}-addSubscription
+  name: ${self:service}-${self:provider.stage}-putSubscription
   events:
     - http:
         path: api/v1/subscriptions
-        method: POST
-        cors: true
-
-upTableSubscription:
-  handler: dist/app.handler
-  name: ${self:service}-${self:provider.stage}-upTableSubscription
-  events:
-    - http:
-        path: api/v1/subscriptions/up
         method: POST
         cors: true
 
@@ -50,4 +68,13 @@ updateSubscription:
     - http:
         path: api/v1/subscriptions
         method: PUT
+        cors: true
+
+upTableSubscription:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-upTableSubscription
+  events:
+    - http:
+        path: api/v1/subscriptions/up
+        method: POST
         cors: true

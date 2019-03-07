@@ -7,12 +7,30 @@ downTableUserGroup:
         method: POST
         cors: true
 
-getUserGroup:
+getUserGroupByUuid:
   handler: dist/app.handler
-  name: ${self:service}-${self:provider.stage}-getUserGroup
+  name: ${self:service}-${self:provider.stage}-getUserGroupByUuid
   events:
     - http:
-        path: api/v1/user-groups/{proxy+}
+        path: api/v1/user-groups/{uuid}
+        method: GET
+        cors: true
+
+getUserGroups:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-getUserGroups
+  events:
+    - http:
+        path: api/v1/user-groups
+        method: GET
+        cors: true
+
+getUserGroupsNextPage:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-getUserGroupsNextPage
+  events:
+    - http:
+        path: api/v1/user-groups/next/{exclusiveStartKey}
         method: GET
         cors: true
 
