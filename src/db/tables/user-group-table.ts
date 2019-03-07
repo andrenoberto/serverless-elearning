@@ -1,4 +1,5 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
@@ -47,6 +48,24 @@ export class UserGroupTable extends Table implements IMigration {
       };
     }
     this.scanTable(params, callback);
+  }
+
+  public put(userGroup: IUserGroup, callback): void {
+    const params: DynamoDB.Types.PutItemInput = {
+      Item: {
+        'Uuid': {
+          S: uuidv4()
+        },
+        'Name': {
+          S: userGroup.name
+        },
+        'Description': {
+          S: userGroup.description
+        }
+      },
+      TableName: this.tableName
+    };
+    this.putItem(params, callback);
   }
 
   public up(callback, {

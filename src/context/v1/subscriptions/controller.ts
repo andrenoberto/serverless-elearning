@@ -87,7 +87,7 @@ export class SubscriptionController {
   public put(req, res): void {
     this.subscriptionTable.put(req.body,
       (err, data: DynamoDB.Types.PutItemOutput, putInput: DynamoDB.Types.PutItemInput) => {
-        if (!err) {
+        if (!err && data) {
           const result: ISubscription = SubscriptionFactory.convertPutItemFromDynamoDB(putInput);
           res.json(result);
         } else {

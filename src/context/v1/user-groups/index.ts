@@ -18,6 +18,10 @@ router.get('/next/:exclusiveStartKey', (req, res) => {
   controller.get(req, res);
 });
 
+router.post('/', UserGroupControllerValidator.putUserGroup, (req, res) => {
+  controller.put(req, res);
+});
+
 router.post('/down', UserGroupControllerValidator.tableManagementSubscription, (req, res) => {
   controller.down(req, res);
 });
