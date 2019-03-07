@@ -16,6 +16,15 @@ getUserGroup:
         method: GET
         cors: true
 
+putUserGroup:
+  handler: dist/app.handler
+  name: ${self:service}-${self:provider.stage}-putUserGroup
+  events:
+    - http:
+        path: api/v1/user-groups
+        method: POST
+        cors: true
+
 upTableUserGroup:
   handler: dist/app.handler
   name: ${self:service}-${self:provider.stage}-upTableUserGroup

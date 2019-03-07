@@ -16,6 +16,18 @@ export class UserGroupFactory {
     return userGroup;
   }
 
+  public static convertPutItemFromDynamoDB(putItemInput: DynamoDB.Types.PutItemInput): IUserGroup {
+    let userGroup: IUserGroup = {};
+    if (putItemInput && putItemInput.Item) {
+      userGroup = {
+        uuid: putItemInput.Item.Uuid.S,
+        name: putItemInput.Item.Name.S,
+        description: putItemInput.Item.Description.S
+      };
+    }
+    return userGroup;
+  }
+
   public static convertScanFromDynamoDB(scanOutput: DynamoDB.Types.ScanOutput): IUserGroupScanResult {
     const userGroups: Array<IUserGroup> = [];
     scanOutput.Items.forEach((item: IDynamoUserGroupItem) => {

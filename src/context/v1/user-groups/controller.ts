@@ -56,6 +56,20 @@ export class UserGroupController {
     }, req.params.exclusiveStartKey || null);
   }
 
+  public put(req, res): void {
+    this.userGroupTable.put(req.body,
+      (err, data: DynamoDB.Types.PutItemOutput, putItemInput: DynamoDB.Types.PutItemInput) => {
+      if (!err && data) {
+        const result = UserGroupFactory.convertPutItemFromDynamoDB(putItemInput);
+        res.json(result);
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
+  }
+
   public up(req, res): void {
     if (validateMasterKey(req)) {
       this.userGroupTable.up((err, data: DynamoDB.Types.CreateTableOutput) => {
