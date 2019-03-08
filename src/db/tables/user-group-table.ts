@@ -58,9 +58,6 @@ export class UserGroupTable extends Table implements IMigration {
         },
         'Name': {
           S: userGroup.name
-        },
-        'Description': {
-          S: userGroup.description
         }
       },
       TableName: this.tableName
