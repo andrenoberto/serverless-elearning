@@ -26,7 +26,8 @@ export class SubscriptionControllerValidator {
         active: Joi.boolean().required(),
         name: Joi.string().required(),
         description: Joi.string(),
-        plans: Joi.array().items(Joi.string().min(1).required()).required(),
+        days: Joi.number().required(),
+        price: Joi.number().required(),
         userGroups: Joi.array().items(Joi.string().min(1).required()).required()
       }).required(),
       {
@@ -69,7 +70,8 @@ export class SubscriptionControllerValidator {
         active: Joi.boolean(),
         name: Joi.string(),
         description: Joi.string(),
-        plans: Joi.array().items(Joi.string().min(1).required()),
+        days: Joi.number().required(),
+        price: Joi.number().required(),
         userGroups: Joi.array().items(Joi.string().min(1).required())
       }).required(),
       {

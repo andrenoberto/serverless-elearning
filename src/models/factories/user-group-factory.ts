@@ -1,40 +1,33 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+import {oc} from 'ts-optchain';
 
 import {IDynamoUserGroupItem} from '@db/interfaces/i-dynamo-user-group-item';
 import {IUserGroup, IUserGroupScanResult} from '@models/interfaces/i-user-group';
 
 export class UserGroupFactory {
   public static convertGetItemFromDynamoDB(getItemOutput: DynamoDB.Types.GetItemOutput): IUserGroup {
-    let userGroup: IUserGroup = {};
-    if (getItemOutput && getItemOutput.Item) {
-      userGroup = {
-        uuid: getItemOutput.Item.Uuid.S,
-        name: getItemOutput.Item.Name.S,
-        description: getItemOutput.Item.Description.S
-      };
-    }
-    return userGroup;
+    return {
+      uuid: oc(getItemOutput).Item.Uuid.S(''),
+      name: oc(getItemOutput).Item.Name.S(''),
+      description: oc(getItemOutput).Item.Description.S('')
+    };
   }
 
   public static convertPutItemFromDynamoDB(putItemInput: DynamoDB.Types.PutItemInput): IUserGroup {
-    let userGroup: IUserGroup = {};
-    if (putItemInput && putItemInput.Item) {
-      userGroup = {
-        uuid: putItemInput.Item.Uuid.S,
-        name: putItemInput.Item.Name.S,
-        description: putItemInput.Item.Description.S
-      };
-    }
-    return userGroup;
+    return {
+      uuid: oc(putItemInput).Item.Uuid.S(''),
+      name: oc(putItemInput).Item.Name.S(''),
+      description: oc(putItemInput).Item.Description.S('')
+    };
   }
 
   public static convertScanFromDynamoDB(scanOutput: DynamoDB.Types.ScanOutput): IUserGroupScanResult {
     const userGroups: Array<IUserGroup> = [];
     scanOutput.Items.forEach((item: IDynamoUserGroupItem) => {
       userGroups.push({
-        uuid: item.Uuid.S,
-        name: item.Name.S,
-        description: item.Description.S
+        uuid: oc(item).Uuid.S(''),
+        name: oc(item).Name.S(''),
+        description: oc(item).Description.S('')
       });
     });
     return {
