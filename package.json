@@ -5,10 +5,10 @@
   "main": "src/app.js",
   "scripts": {
     "audit:dependencies": "yarn audit",
-    "build": "tsc -pretty -p .",
+    "build": "npm run start:cleaning && tsc -pretty -p .",
     "deploy": "npm run build && sls deploy --force",
     "start:cleaning": "rm -rf ./dist",
-    "start:offline": "npm run start:cleaning && npm run build && serverless offline start",
+    "start:offline": "npm run build && serverless offline start",
     "start:debug": "npm run build && SLS_DEBUG=* node --inspect ./node_modules/.bin/serverless offline -s dev",
     "test": "clear && npm run test:tslint && npm run test:mdlint",
     "test:tslint": "tslint --project tsconfig.json",
@@ -41,6 +41,7 @@
     "module-alias": "^2.2.0",
     "serverless": "^1.37.1",
     "serverless-http": "^1.9.0",
+    "ts-optchain": "^0.1.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
