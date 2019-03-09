@@ -93,4 +93,8 @@ export class UserGroupTable extends Table implements IMigration {
     };
     this.createTable(params, callback);
   }
+
+  public update(userGroup: IUserGroup, callback): void {
+    this.updateItem(userGroup, this.tableName, callback);
+  }
 }
