@@ -1,5 +1,5 @@
 deleteSubscriptions:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-deleteSubscriptions
   events:
     - http:
@@ -8,7 +8,7 @@ deleteSubscriptions:
         cors: true
 
 deleteSubscriptionByUuid:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-deleteSubscriptionByUuid
   events:
     - http:
@@ -17,7 +17,7 @@ deleteSubscriptionByUuid:
         cors: true
 
 downTableSubscription:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-downTableSubscription
   events:
     - http:
@@ -26,7 +26,7 @@ downTableSubscription:
         cors: true
 
 getSubscriptionByUuid:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-getSubscriptionByUuid
   events:
     - http:
@@ -35,7 +35,7 @@ getSubscriptionByUuid:
         cors: true
 
 getSubscriptions:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-getSubscriptions
   events:
     - http:
@@ -44,7 +44,7 @@ getSubscriptions:
         cors: true
 
 getSubscriptionsNextPage:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-getSubscriptionsNextPage
   events:
     - http:
@@ -53,7 +53,7 @@ getSubscriptionsNextPage:
         cors: true
 
 putSubscription:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-putSubscription
   events:
     - http:
@@ -62,7 +62,7 @@ putSubscription:
         cors: true
 
 updateSubscription:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-updateSubscription
   events:
     - http:
@@ -71,7 +71,7 @@ updateSubscription:
         cors: true
 
 upTableSubscription:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-upTableSubscription
   events:
     - http:

@@ -1,6 +1,7 @@
 plugins:
   - serverless-dotenv-plugin
   - serverless-offline
+  - serverless-plugin-typescript
 
 service: ${env:SERVERLESS_NAME}
 
