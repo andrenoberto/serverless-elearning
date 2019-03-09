@@ -13,6 +13,14 @@ export class UserGroupTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
+  public batchDelete(items: Array<string>, callback): void {
+    this.batchDeleteItem(items, this.tableName, callback);
+  }
+
+  public delete(uuid: string, callback): void {
+    this.deleteItem(uuid, this.tableName, callback);
+  }
+
   public down(callback): void {
     this.deleteTable(this.tableName, callback);
   }

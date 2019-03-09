@@ -15,35 +15,11 @@ export class SubscriptionTable extends Table implements IMigration {
   }
 
   public batchDelete(items: Array<string>, callback): void {
-    const params: DynamoDB.Types.BatchWriteItemInput = {
-      RequestItems: {}
-    };
-    params.RequestItems[this.tableName] = [];
-    items.forEach((item: string) => {
-      params.RequestItems[this.tableName].push({
-        DeleteRequest: {
-          Key: {
-            'Uuid': {
-              S: item
-            }
-          }
-        }
-      });
-    });
-    this.batchWriteItem(params, callback);
+    this.batchDeleteItem(items, this.tableName, callback);
   }
 
   public delete(uuid: string, callback): void {
-    const params: DynamoDB.Types.DeleteItemInput = {
-      Key: {
-        'Uuid': {
-          S: uuid
-        }
-      },
-      ReturnValues: 'ALL_OLD',
-      TableName: this.tableName
-    };
-    this.deleteItem(params, callback);
+    this.deleteItem(uuid, this.tableName, callback);
   }
 
   public down(callback): void {
