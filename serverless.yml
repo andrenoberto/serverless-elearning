@@ -12,8 +12,8 @@ provider:
   region: us-east-1
   versionFunctions: false
   deploymentBucket:
-    name: serverless-elearning-${env:ENVIRONMENT}-deployment
-  logRetentionInDays: 10
+    name: serverless-elearning-${env:AWS_ACCOUNT_ID}-${env:ENVIRONMENT}-deployment
+  logRetentionInDays: 7
   environment:
     AWS_KEY: ${env:AWS_KEY}
     AWS_SECRET: ${env:AWS_KEY}

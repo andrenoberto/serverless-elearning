@@ -6,10 +6,10 @@
   "scripts": {
     "audit:dependencies": "yarn audit",
     "build": "npm run start:clear:dist && tsc -pretty -p .",
-    "postpublish": "npm run start:clear:dist && npm run start:clear:serverless",
-    "prepublish": "npm run build",
+    "postdeploy": "npm run start:clear:dist && npm run start:clear:serverless",
+    "predeploy": "npm run build",
     "prestart": "npm run start:clear:build",
-    "publish":  "sls deploy --force",
+    "deploy":  "npm run predeploy && sls deploy --force && npm run postdeploy",
     "start": "serverless offline start",
     "start:clear:build": "rm -rf .build/",
     "start:clear:dist": "rm -rf ./dist",
