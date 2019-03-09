@@ -51,18 +51,14 @@ export class SubscriptionFactory {
   }
 
   public static convertUpdateItemFromDynamoDB(updateItemOutput: DynamoDB.Types.UpdateItemOutput): ISubscription {
-    let subscription: ISubscription = {};
-    if (updateItemOutput && updateItemOutput.Attributes) {
-      subscription = {
-        uuid: oc(updateItemOutput).Attributes.Uuid.S(''),
-        active: oc(updateItemOutput).Attributes.Active.BOOL() || false,
-        name: oc(updateItemOutput).Attributes.Name.S(''),
-        description: oc(updateItemOutput).Attributes.Description.S(''),
-        days: parseInt(oc(updateItemOutput).Attributes.Days.N(), 10) || 0,
-        price: parseFloat(oc(updateItemOutput).Attributes.Price.N()) || .0,
-        userGroups: oc(updateItemOutput).Attributes.UserGroups.SS() || []
-      };
-    }
-    return subscription;
+    return {
+      uuid: oc(updateItemOutput).Attributes.Uuid.S(''),
+      active: oc(updateItemOutput).Attributes.Active.BOOL() || false,
+      name: oc(updateItemOutput).Attributes.Name.S(''),
+      description: oc(updateItemOutput).Attributes.Description.S(''),
+      days: parseInt(oc(updateItemOutput).Attributes.Days.N(), 10) || 0,
+      price: parseFloat(oc(updateItemOutput).Attributes.Price.N()) || .0,
+      userGroups: oc(updateItemOutput).Attributes.UserGroups.SS() || []
+    };
   }
 }

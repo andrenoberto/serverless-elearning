@@ -86,4 +86,16 @@ export class UserGroupController {
       res.status(403).end();
     }
   }
+  public update(req, res): void {
+    this.userGroupTable.update(req.body, (err, data: DynamoDB.Types.UpdateItemOutput) => {
+      if (!err) {
+        const result = UserGroupFactory.convertUpdateItemFromDynamoDB(data);
+        res.json(result);
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
+  }
 }

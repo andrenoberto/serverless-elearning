@@ -1,6 +1,7 @@
 import * as AWS from 'aws-sdk';
 
 import {Config} from '@config/environment';
+import {toPascalCase} from '@libs/utils';
 import {IConfig} from '@models/interfaces';
 
 export class Table {
@@ -44,7 +45,54 @@ export class Table {
     this.dynamoDB.scan(params, callback);
   }
 
-  protected updateItem(params: AWS.DynamoDB.Types.UpdateItemInput, callback): void {
+  protected updateItem(item, tableName: string, callback): void {
+    const params = {
+      ExpressionAttributeNames: {},
+      ExpressionAttributeValues: {},
+      Key: {
+        'Uuid': {
+          S: item.uuid
+        }
+      },
+      ReturnValues: 'ALL_NEW',
+      TableName: tableName,
+      UpdateExpression: 'SET'
+    };
+    for (const [key, value] of Object.entries(item)) {
+      if (key === 'uuid') {
+        continue;
+      }
+      const attributeName = `#${key.toUpperCase()}`;
+      const attributeValue = `:${key.toLowerCase()}`;
+      params.ExpressionAttributeNames[attributeName] = toPascalCase(key);
+      switch (typeof value) {
+        case 'boolean':
+          params.ExpressionAttributeValues[attributeValue] = {
+            BOOL: value
+          };
+          break;
+        case 'number':
+          params.ExpressionAttributeValues[attributeValue] = {
+            N: value.toString()
+          };
+          break;
+        case 'object':
+          params.ExpressionAttributeValues[attributeValue] = {
+            SS: value
+          };
+          break;
+        case 'string':
+          params.ExpressionAttributeValues[attributeValue] = {
+            S: value
+          };
+          break;
+      }
+      if (params.UpdateExpression === 'SET') {
+        params.UpdateExpression += ` ${attributeName} = ${attributeValue}`;
+      } else {
+        params.UpdateExpression += `, ${attributeName} = ${attributeValue}`;
+      }
+    }
     this.dynamoDB.updateItem(params, callback);
   }
 }

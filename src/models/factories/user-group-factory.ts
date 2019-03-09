@@ -37,4 +37,12 @@ export class UserGroupFactory {
       items: userGroups
     };
   }
+
+  public static convertUpdateItemFromDynamoDB(updateItemOutput: DynamoDB.Types.UpdateItemOutput): IUserGroup {
+    return {
+      uuid: oc(updateItemOutput).Attributes.Uuid.S(''),
+      name: oc(updateItemOutput).Attributes.Name.S(''),
+      description: oc(updateItemOutput).Attributes.Description.S('')
+    };
+  }
 }

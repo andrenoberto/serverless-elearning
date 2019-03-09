@@ -62,7 +62,7 @@ export class SubscriptionTable extends Table implements IMigration {
     this.getItem(params, callback);
   }
 
-  public get(callback, exclusiveStartKey = null): void {
+  public get(callback, exclusiveStartKey: string = null): void {
     const params: DynamoDB.Types.ScanInput = {
       ExpressionAttributeNames: {
         '#U': 'Uuid',
@@ -144,53 +144,6 @@ export class SubscriptionTable extends Table implements IMigration {
   }
 
   public update(subscription: ISubscription, callback): void {
-    const params: DynamoDB.Types.UpdateItemInput = {
-      ExpressionAttributeNames: {},
-      ExpressionAttributeValues: {},
-      Key: {
-        'Uuid': {
-          S: subscription.uuid
-        }
-      },
-      ReturnValues: 'ALL_NEW',
-      TableName: this.tableName,
-      UpdateExpression: 'SET'
-    };
-    for (const [key, value] of Object.entries(subscription)) {
-      if (key === 'uuid') {
-        continue;
-      }
-      const attributeName = `#${key.toUpperCase()}`;
-      const attributeValue = `:${key.toLowerCase()}`;
-      params.ExpressionAttributeNames[attributeName] = toPascalCase(key);
-      switch (typeof value) {
-        case 'boolean':
-          params.ExpressionAttributeValues[attributeValue] = {
-            BOOL: value
-          };
-          break;
-        case 'number':
-          params.ExpressionAttributeValues[attributeValue] = {
-            N: value.toString()
-          };
-          break;
-        case 'object':
-          params.ExpressionAttributeValues[attributeValue] = {
-            SS: value
-          };
-          break;
-        case 'string':
-          params.ExpressionAttributeValues[attributeValue] = {
-            S: value
-          };
-          break;
-      }
-      if (params.UpdateExpression === 'SET') {
-        params.UpdateExpression += ` ${attributeName} = ${attributeValue}`;
-      } else {
-        params.UpdateExpression += `, ${attributeName} = ${attributeValue}`;
-      }
-    }
-    this.updateItem(params, callback);
+    this.updateItem(subscription, this.tableName, callback);
   }
 }
