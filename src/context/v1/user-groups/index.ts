@@ -6,6 +6,14 @@ import {UserGroupControllerValidator} from '@api/v1/user-groups/validator';
 const controller = new UserGroupController();
 const router = Express.Router();
 
+router.delete('/', UserGroupControllerValidator.batchDeleteUserGroup, (req, res) => {
+  controller.batchDelete(req, res);
+});
+
+router.delete('/:uuid', (req, res) => {
+  controller.delete(req, res);
+});
+
 router.get('/', (req, res) => {
   controller.get(req, res);
 });
@@ -30,7 +38,7 @@ router.post('/up', UserGroupControllerValidator.tableManagementUserGroup, (req, 
   controller.up(req, res);
 });
 
-router.put('/', (req, res) => {
+router.put('/', UserGroupControllerValidator.updateUserGroup, (req, res) => {
   controller.update(req, res);
 });
 

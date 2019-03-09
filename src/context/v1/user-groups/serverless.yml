@@ -1,3 +1,21 @@
+deleteUserGroups:
+  handler: src/app.handler
+  name: ${self:service}-${self:provider.stage}-deleteUserGroups
+  events:
+    - http:
+        path: api/v1/user-groups
+        method: DELETE
+        cors: true
+
+deleteUserGroupByUuid:
+  handler: src/app.handler
+  name: ${self:service}-${self:provider.stage}-deleteUserGroupByUuid
+  events:
+    - http:
+        path: api/v1/user-groups/{uuid}
+        method: DELETE
+        cors: true
+
 downTableUserGroup:
   handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-downTableUserGroup
@@ -44,7 +62,7 @@ putUserGroup:
         cors: true
 
 updateUserGroup:
-  handler: dist/app.handler
+  handler: src/app.handler
   name: ${self:service}-${self:provider.stage}-updateUserGroup
   events:
     - http:

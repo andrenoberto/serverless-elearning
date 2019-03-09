@@ -9,6 +9,34 @@ export class UserGroupController {
   constructor(private readonly userGroupTable = new UserGroupTable()) {
   }
 
+  public batchDelete(req, res): void {
+    this.userGroupTable.batchDelete(req.body.uuids, (err, data: DynamoDB.Types.BatchWriteItemOutput) => {
+      if (!err) {
+        res.json(data);
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
+  }
+
+  public delete(req, res): void {
+    this.userGroupTable.delete(req.params.uuid, (err, data: DynamoDB.Types.DeleteItemOutput) => {
+      if (!err) {
+        if (Object.keys(data).length > 0) {
+          res.status(200).end();
+        } else {
+          res.status(204).end();
+        }
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
+  }
+
   public down(req, res): void {
     if (validateMasterKey(req)) {
       this.userGroupTable.down((err, data: DynamoDB.Types.DeleteTableOutput) => {

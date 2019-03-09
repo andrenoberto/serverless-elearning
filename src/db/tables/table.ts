@@ -15,6 +15,25 @@ export class Table {
     });
   }
 
+  protected batchDeleteItem(items: Array<string>, tableName: string, callback): void {
+    const params: AWS.DynamoDB.Types.BatchWriteItemInput = {
+      RequestItems: {}
+    };
+    params.RequestItems[tableName] = [];
+    items.forEach((item: string) => {
+      params.RequestItems[tableName].push({
+        DeleteRequest: {
+          Key: {
+            'Uuid': {
+              S: item
+            }
+          }
+        }
+      });
+    });
+    this.batchWriteItem(params, callback);
+  }
+
   protected batchWriteItem(params: AWS.DynamoDB.Types.BatchWriteItemInput, callback): void {
     this.dynamoDB.batchWriteItem(params, callback);
   }
@@ -23,7 +42,16 @@ export class Table {
     this.dynamoDB.createTable(params, callback);
   }
 
-  protected deleteItem(params: AWS.DynamoDB.Types.DeleteItemInput, callback): void {
+  protected deleteItem(uuid: string, tableName: string, callback): void {
+    const params: AWS.DynamoDB.Types.DeleteItemInput = {
+      Key: {
+        'Uuid': {
+          S: uuid
+        }
+      },
+      ReturnValues: 'ALL_OLD',
+      TableName: tableName
+    };
     this.dynamoDB.deleteItem(params, callback);
   }
 
