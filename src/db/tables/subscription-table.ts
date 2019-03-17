@@ -2,7 +2,6 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
-import {toPascalCase} from '@libs/utils';
 import {IConfigDynamoDB, IMigration} from '@models/interfaces';
 import {ISubscription} from '@models/interfaces/i-subscription';
 

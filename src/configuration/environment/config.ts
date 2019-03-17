@@ -9,9 +9,11 @@ export class Config {
   private static get(): IConfig {
     return {
       aws: Environment.aws,
+      awsAccount: Environment.awsAccount,
       dynamoDB: Environment.dynamoDB,
       env: Environment.env,
-      master: Environment.master
+      master: Environment.master,
+      mediaConvert: Environment.mediaConvert
     };
   }
 }

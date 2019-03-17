@@ -25,6 +25,12 @@ provider:
     AWS_DYNAMO_DB_WRITE_CAPACITY_UNITS: ${env:AWS_DYNAMO_DB_WRITE_CAPACITY_UNITS}
     AWS_DYNAMO_DB_LIMIT: ${env:AWS_DYNAMO_DB_LIMIT}
 
+    AWS_MEDIA_CONVERT_API_VERSION: ${env:AWS_MEDIA_CONVERT_API_VERSION}
+    AWS_MEDIA_CONVERT_ENDPOINT: ${env:AWS_MEDIA_CONVERT_ENDPOINT}
+    AWS_MEDIA_CONVERT_JOB_TEMPLATE: ${env:AWS_MEDIA_CONVERT_JOB_TEMPLATE}
+    AWS_MEDIA_CONVERT_OUTPUT_BUCKET: ${env:AWS_MEDIA_CONVERT_OUTPUT_BUCKET}
+    AWS_MEDIA_CONVERT_ROLE: ${env:AWS_MEDIA_CONVERT_ROLE}
+
     ENVIRONMENT: ${env:ENVIRONMENT}
     MASTER_KEY: ${env:MASTER_KEY}
 
@@ -36,6 +42,7 @@ provider:
     SERVERLESS_NAME: ${env:SERVERLESS_NAME}
 
 functions:
+  - ${file(./src/context/v1/media-services/serverless.yml)}
   - ${file(./src/context/v1/subscriptions/serverless.yml)}
   - ${file(./src/context/v1/user-groups/serverless.yml)}
 
