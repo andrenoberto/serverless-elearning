@@ -53,8 +53,8 @@ export class Environment {
         apiVersion: GetEnv.string('AWS_MEDIA_CONVERT_API_VERSION'),
         endpoint: GetEnv.string('AWS_MEDIA_CONVERT_ENDPOINT')
       },
-      outputBucket:
-        `${this.env.serverless}-${this.awsAccount.accountId}-${this.env.stage}-${GetEnv.string('AWS_MEDIA_CONVERT_OUTPUT_BUCKET')}`,
+      /* tslint:disable-next-line max-line-length */
+      outputBucket: `${this.env.serverless}-${this.awsAccount.accountId}-${this.env.stage}-${GetEnv.string('AWS_MEDIA_CONVERT_OUTPUT_BUCKET')}`,
       role: `arn:aws:iam::${this.awsAccount.accountId}:role/${GetEnv.string('AWS_MEDIA_CONVERT_ROLE')}`
     };
   }
