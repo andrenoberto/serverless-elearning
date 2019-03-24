@@ -8,9 +8,12 @@ moduleAlias.addAliases({
   '@src': __dirname
 });
 
+import * as MediaServices from '@api/v1/media-services';
 import {API} from '@src/api';
 
 const serverless = require('serverless-http');
 
 /* tslint:disable-next-line no-any */
 export const handler: Promise<any> = serverless(new API().app);
+
+module.exports.encodeVideo = MediaServices.encodeVideo;

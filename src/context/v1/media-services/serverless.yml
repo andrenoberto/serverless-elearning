@@ -1,0 +1,7 @@
+encodeVideo:
+  handler: src/app.encodeVideo
+  name: ${self:service}-${self:provider.stage}-encodeVideo
+  events:
+    - s3:
+        bucket: ${env:SERVERLESS_NAME}-${env:AWS_ACCOUNT_ID}-${self:provider.stage}-video-input
+        event: s3:ObjectCreated:*
