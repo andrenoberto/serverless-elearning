@@ -1,0 +1,7 @@
+{
+  "jobId": "$.detail.jobId",
+  "settings": "$.detail.userMetadata.input",
+  "application": "$.detail.userMetadata.application",
+  "status": "$.detail.status",
+  "region": "$.detail.region"
+}
