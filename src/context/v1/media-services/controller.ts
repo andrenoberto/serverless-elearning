@@ -12,8 +12,7 @@ export class MediaServicesController {
     this.config = Config.factory();
   }
 
-  /* tslint:disable-next-line no-any */
-  public async convert(event): Promise<any> {
+  public async createEncodeJob(event): Promise<void> {
     const {s3} = event.Records[0];
     const sourceS3Bucket = s3.bucket.name;
     const sourceS3Key = s3.object.key;
@@ -54,6 +53,9 @@ export class MediaServicesController {
             }
           ],
           OutputGroups: []
+        },
+        UserMetadata: {
+          application: this.config.env.serverless
         }
       };
       const params: AWS.MediaConvert.GetJobTemplateRequest = {
@@ -89,5 +91,9 @@ export class MediaServicesController {
       throw err;
     }
     return event;
+  }
+
+  public async notify(event) {
+    console.log('NOTIFY TRIGGER::', event);
   }
 }
