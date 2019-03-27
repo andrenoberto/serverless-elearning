@@ -23,9 +23,13 @@ API-First Headless virtual learning environment built on top of AWS serverless a
 *   API Gateway
 *   Cognito
 *   CloudFormation
+*   CloudWatch
 *   DynamoDB
+*   Elemental MediaConvert
+*   IAM
 *   Lambda
-*   SES
+*   S3
+*   SNS
 ## <a name="quick-start"></a>Quick Start
 Feel free to use npm or yarn to run all scripts provided in this source code.
 
