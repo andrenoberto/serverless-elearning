@@ -1,0 +1,9 @@
+{
+  "Sid": "TrustCWEToPublishEventsToMyTopic",
+  "Effect": "Allow",
+  "Principal": {
+    "Service": "events.amazonaws.com"
+  },
+  "Action": "sns:Publish",
+  "Resource": "ARN"
+}

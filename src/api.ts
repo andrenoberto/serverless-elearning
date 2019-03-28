@@ -1,5 +1,5 @@
 import * as BodyParser from 'body-parser';
-import * as Express from 'express';
+import Express from 'express';
 
 import cors from '@libs/cors';
 import Routes from '@src/routes';
