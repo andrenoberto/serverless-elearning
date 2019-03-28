@@ -6,7 +6,13 @@ export const toPascalCase = (str: string): string => {
   }).replace(/\s+/g, '');
 };
 
-export const validateMasterKey = (req): boolean => {
-  const {master} = Config.factory();
-  return req.body.key === master.key;
+export const validateMasterKey = (req): Promise<Error> => {
+  return new Promise((resolve, reject) => {
+    const {master} = Config.factory();
+    if (req.body.key === master.key) {
+      resolve();
+    } else {
+      reject(new Error('The provided key is not valid.'));
+    }
+  });
 };

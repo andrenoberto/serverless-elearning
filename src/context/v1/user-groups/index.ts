@@ -2,6 +2,7 @@ import Express from 'express';
 
 import {UserGroupController} from '@api/v1/user-groups/controller';
 import {UserGroupControllerValidator} from '@api/v1/user-groups/validator';
+import {Validators} from '@libs/validators';
 
 const controller = new UserGroupController();
 const router = Express.Router();
@@ -30,11 +31,11 @@ router.post('/', UserGroupControllerValidator.putUserGroup, (req, res) => {
   controller.put(req, res);
 });
 
-router.post('/down', UserGroupControllerValidator.tableManagementUserGroup, (req, res) => {
+router.post('/down', Validators.tableManagement, Validators.masterKey, (req, res) => {
   controller.down(req, res);
 });
 
-router.post('/up', UserGroupControllerValidator.tableManagementUserGroup, (req, res) => {
+router.post('/up', Validators.tableManagement, Validators.masterKey, (req, res) => {
   controller.up(req, res);
 });
 

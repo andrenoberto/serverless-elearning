@@ -38,20 +38,16 @@ export class SubscriptionController {
   }
 
   public down(req, res): void {
-    if (validateMasterKey(req)) {
-      this.subscriptionTable.down((err, data: DynamoDB.Types.DeleteTableOutput) => {
-        if (!err) {
-          const {TableName: tableName, TableStatus: status} = data.TableDescription;
-          res.json({tableName, status});
-        } else {
-          console.error(err);
-          const {message} = err;
-          res.status(err.statusCode).json({message});
-        }
-      });
-    } else {
-      res.status(403).end();
-    }
+    this.subscriptionTable.down((err, data: DynamoDB.Types.DeleteTableOutput) => {
+      if (!err) {
+        const {TableName: tableName, TableStatus: status} = data.TableDescription;
+        res.json({tableName, status});
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
   }
 
   public find(req, res): void {
@@ -99,20 +95,16 @@ export class SubscriptionController {
   }
 
   public up(req, res): void {
-    if (validateMasterKey(req)) {
-      this.subscriptionTable.up((err, data: DynamoDB.Types.CreateTableOutput) => {
-        if (!err) {
-          const {TableName: tableName, TableStatus: status} = data.TableDescription;
-          res.json({tableName, status});
-        } else {
-          console.error(err);
-          const {message} = err;
-          res.status(err.statusCode).json({message});
-        }
-      });
-    } else {
-      res.status(403).end();
-    }
+    this.subscriptionTable.up((err, data: DynamoDB.Types.CreateTableOutput) => {
+      if (!err) {
+        const {TableName: tableName, TableStatus: status} = data.TableDescription;
+        res.json({tableName, status});
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
   }
 
   public update(req, res): void {
