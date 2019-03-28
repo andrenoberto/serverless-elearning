@@ -1,8 +1,18 @@
 import * as BodyParser from 'body-parser';
-import * as Express from 'express';
+import Express from 'express';
 
 import cors from '@libs/cors';
 import Routes from '@src/routes';
+
+interface IFrameworkApplication {
+  handle: () => void;
+  router: {
+    route: () => void;
+  };
+  _core: {
+    _dispatch: () => void;
+  };
+}
 
 export class API {
   constructor(public readonly expressApp: Express.Application = Express()) {
@@ -37,7 +47,8 @@ export class API {
     }
   }
 
-  public get app(): Express.Application {
+  /* tslint:disable-next-line ban-types */
+  public get app(): Function | Partial<IFrameworkApplication> {
     return this.expressApp;
   }
 }

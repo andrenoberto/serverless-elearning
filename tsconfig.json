@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
     "isolatedModules": false,
     "lib": ["es2018", "dom"],
     "module": "commonjs",
