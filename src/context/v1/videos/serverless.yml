@@ -1,0 +1,17 @@
+downTableVideo:
+  handler: src/app.handler
+  name: ${self:service}-${self:provider.stage}-downTableVideo
+  events:
+    - http:
+        path: api/v1/videos/down
+        method: POST
+        cors: true
+
+upTableVideo:
+  handler: src/app.handler
+  name: ${self:service}-${self:provider.stage}-upTableVideo
+  events:
+    - http:
+        path: api/v1/videos/up
+        method: POST
+        cors: true

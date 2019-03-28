@@ -1,6 +1,6 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
-import {UserGroupTable} from '@db/tables/user-group-table';
+import {UserGroupTable} from '@db/tables';
 import {validateMasterKey} from '@libs/utils';
 import {UserGroupFactory} from '@models/factories/user-group-factory';
 import {IUserGroup, IUserGroupScanResult} from '@models/interfaces/i-user-group';
@@ -114,6 +114,7 @@ export class UserGroupController {
       res.status(403).end();
     }
   }
+
   public update(req, res): void {
     this.userGroupTable.update(req.body, (err, data: DynamoDB.Types.UpdateItemOutput) => {
       if (!err) {
