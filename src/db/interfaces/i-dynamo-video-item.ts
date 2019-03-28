@@ -2,41 +2,43 @@ export interface IDynamoVideoItem {
   Uuid?: {
     S: string
   };
-  inputFileName: {
+  InputFileName?: {
     S: string
   };
-  inputSource: {
+  InputSource?: {
     S: string
   };
-  outputDetails: {
-    L: Array<IDynamoVideoOutputDetails>
+  OutputDetails?: {
+    L: IDynamoVideoOutputDetails[]
   };
-  outputSource: {
+  OutputSource?: {
     S: string
   };
-  size: {
-    N: number
+  Size?: {
+    N: string
   };
-  status: {
+  Status?: {
     S: string
   };
-  type: {
+  Type?: {
     S: string
   };
 }
 
 export interface IDynamoVideoOutputDetails {
-  durationInMS: {
-    N: number
-  };
-  videoDetails: {
-    M: {
-      widthInPx: {
-        N: number
-      },
-      heightInPx: {
-        N: number
+  M: {
+    DurationInMS?: {
+      N: string
+    };
+    VideoDetails?: {
+      M: {
+        WidthInPx?: {
+          N: string
+        },
+        HeightInPx?: {
+          N: string
+        }
       }
-    }
+    };
   };
 }

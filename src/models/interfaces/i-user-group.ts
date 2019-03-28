@@ -10,5 +10,5 @@ export interface IUserGroupScanResult {
   count?: number;
   scannedCount?: number;
   lastEvaluatedKey?: Key;
-  items?: Array<IUserGroup>;
+  items?: IUserGroup[];
 }

@@ -15,7 +15,7 @@ export class Table {
     });
   }
 
-  protected batchDeleteItem(items: Array<string>, tableName: string, callback): void {
+  protected batchDeleteItem(items: string[], tableName: string, callback): void {
     const params: AWS.DynamoDB.Types.BatchWriteItemInput = {
       RequestItems: {}
     };

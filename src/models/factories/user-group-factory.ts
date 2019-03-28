@@ -2,7 +2,7 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {oc} from 'ts-optchain';
 
 import {IDynamoUserGroupItem} from '@db/interfaces';
-import {IUserGroup, IUserGroupScanResult} from '@models/interfaces/i-user-group';
+import {IUserGroup, IUserGroupScanResult} from '@models/interfaces';
 
 export class UserGroupFactory {
   public static convertGetItemFromDynamoDB(getItemOutput: DynamoDB.Types.GetItemOutput): IUserGroup {
@@ -22,7 +22,7 @@ export class UserGroupFactory {
   }
 
   public static convertScanFromDynamoDB(scanOutput: DynamoDB.Types.ScanOutput): IUserGroupScanResult {
-    const userGroups: Array<IUserGroup> = [];
+    const userGroups: IUserGroup[] = [];
     scanOutput.Items.forEach((item: IDynamoUserGroupItem) => {
       userGroups.push({
         uuid: oc(item).Uuid.S(''),

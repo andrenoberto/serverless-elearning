@@ -7,12 +7,12 @@ export interface ISubscription {
   description?: string;
   days?: number;
   price?: number;
-  userGroups?: Array<string>;
+  userGroups?: string[];
 }
 
 export interface ISubscriptionScanResult {
   count?: number;
   scannedCount?: number;
   lastEvaluatedKey?: Key;
-  items?: Array<ISubscription>;
+  items?: ISubscription[];
 }

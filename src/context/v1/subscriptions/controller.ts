@@ -2,8 +2,8 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
 import {SubscriptionTable} from '@db/tables';
 import {validateMasterKey} from '@libs/utils';
-import {SubscriptionFactory} from '@models/factories/subscription-factory';
-import {ISubscription, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
+import {SubscriptionFactory} from '@models/factories';
+import {ISubscription, ISubscriptionScanResult} from '@models/interfaces';
 
 export class SubscriptionController {
   constructor(private readonly subscriptionTable = new SubscriptionTable()) {
