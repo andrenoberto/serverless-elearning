@@ -1,4 +1,4 @@
-import * as Express from 'express';
+import Express from 'express';
 
 import {SubscriptionControllerValidator} from '@api/v1/subscriptions/validator';
 import {SubscriptionController} from './controller';

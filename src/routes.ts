@@ -1,4 +1,4 @@
-import * as Express from 'express';
+import Express from 'express';
 
 import V1 from '@api/v1';
 

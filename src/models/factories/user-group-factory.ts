@@ -1,7 +1,7 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {oc} from 'ts-optchain';
 
-import {IDynamoUserGroupItem} from '@db/interfaces/i-dynamo-user-group-item';
+import {IDynamoUserGroupItem} from '@db/interfaces';
 import {IUserGroup, IUserGroupScanResult} from '@models/interfaces/i-user-group';
 
 export class UserGroupFactory {
