@@ -45,6 +45,7 @@ functions:
   - ${file(./src/context/v1/media-services/serverless.yml)}
   - ${file(./src/context/v1/subscriptions/serverless.yml)}
   - ${file(./src/context/v1/user-groups/serverless.yml)}
+  - ${file(./src/context/v1/videos/serverless.yml)}
 
 resources:
   Resources:
