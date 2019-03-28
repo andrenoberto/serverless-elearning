@@ -1,4 +1,4 @@
-import * as Express from 'express';
+import Express from 'express';
 
 import {UserGroupController} from '@api/v1/user-groups/controller';
 import {UserGroupControllerValidator} from '@api/v1/user-groups/validator';
