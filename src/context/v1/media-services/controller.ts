@@ -16,8 +16,9 @@ export class MediaServicesController {
     const {s3} = event.Records[0];
     const sourceS3Bucket = s3.bucket.name;
     const sourceS3Key = s3.object.key;
-    const inputSource = `s3://${sourceS3Bucket}/${sourceS3Key}`;
-    const destinationSource = `s3://${this.config.mediaConvert.outputBucket}/${uuidv4()}`;
+    const uuid = uuidv4();
+    const fileInput = `s3://${sourceS3Bucket}/${sourceS3Key}`;
+    const destinationSource = `s3://${this.config.mediaConvert.outputBucket}/${uuid}`;
     const mediaConvert = new AWS.MediaConvert({
       ...this.config.aws,
       ...this.config.mediaConvert.options
@@ -49,13 +50,14 @@ export class MediaServicesController {
               DeblockFilter: 'DISABLE',
               DenoiseFilter: 'DISABLE',
               TimecodeSource: 'EMBEDDED',
-              FileInput: inputSource
+              FileInput: fileInput
             }
           ],
           OutputGroups: []
         },
         UserMetadata: {
-          application: this.config.env.serverless
+          application: this.config.env.serverless,
+          uuid
         }
       };
       const params: AWS.MediaConvert.GetJobTemplateRequest = {
@@ -86,6 +88,16 @@ export class MediaServicesController {
       const data = await mediaConvert.createJob(job).promise();
       event.encodingJob = job;
       event.encodeJobId = data.Job.Id;
+      // TODO: create registry in DynamoDB
+      const {FileInput: inputSource} = event.encodingJob.Settings.Inputs[0];
+      const {key: inputFileName, size} = event.Records[0].s3.object;
+      const media = {
+        inputFileName,
+        inputSource,
+        size,
+        uuid
+      };
+      console.log(JSON.stringify(media));
     } catch (err) {
       console.error(err);
       throw err;
@@ -93,7 +105,18 @@ export class MediaServicesController {
     return event;
   }
 
-  public async notify(event) {
-    console.log('NOTIFY TRIGGER::', event);
+  public static updateMediaAfterConvertIsDone(event): void {
+    const eventMessage = JSON.parse(event.Records[0].Sns.Message);
+    const {status, outputGroupDetails, userMetadata} = eventMessage.detail;
+    const {outputDetails, playlistFilePaths, type} = outputGroupDetails[0];
+    const media = {
+      outputDetails,
+      outputSource: playlistFilePaths[0],
+      status,
+      type,
+      uuid: userMetadata.uuid
+    };
+    // TODO: update database, it depends on video controller to be created
+    console.log(JSON.stringify(media));
   }
 }

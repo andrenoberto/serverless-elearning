@@ -12,9 +12,9 @@ export const encodeVideo = (event, context, callback) => {
     });
 };
 
-export const notify = (event, context, callback) => {
+export const updateMediaAfterConvertIsDone = (event, context, callback) => {
   try {
-    controller.notify(event);
+    MediaServicesController.updateMediaAfterConvertIsDone(event);
     context.done();
   } catch (err) {
     callback(err);

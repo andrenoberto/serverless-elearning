@@ -6,8 +6,8 @@ encodeVideo:
         bucket: ${env:SERVERLESS_NAME}-${env:AWS_ACCOUNT_ID}-${self:provider.stage}-video-input
         event: s3:ObjectCreated:*
 
-notify:
-  handler: src/app.notify
-  name: ${self:service}-${self:provider.stage}-notify
+updateMediaAfterConvertIsDone:
+  handler: src/app.updateMediaAfterConvertIsDone
+  name: ${self:service}-${self:provider.stage}-updateMediaAfterConvertIsDone
   events:
-    - sns: arn:aws:sns:${env:AWS_REGION_CODE}:${env:AWS_ACCOUNT_ID}:${self:provider.stage}-notify
+    - sns: arn:aws:sns:${env:AWS_REGION_CODE}:${env:AWS_ACCOUNT_ID}:${self:provider.stage}-updateMediaAfterConvertIsDone

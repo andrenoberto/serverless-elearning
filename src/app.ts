@@ -13,8 +13,7 @@ import {API} from '@src/api';
 
 const serverless = require('serverless-http');
 
-/* tslint:disable-next-line no-any */
 export const handler: Promise<void> = serverless(new API().app);
 
 module.exports.encodeVideo = MediaServices.encodeVideo;
-module.exports.notify = MediaServices.notify;
+module.exports.updateMediaAfterConvertIsDone = MediaServices.updateMediaAfterConvertIsDone;
