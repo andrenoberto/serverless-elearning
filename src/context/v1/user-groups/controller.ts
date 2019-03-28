@@ -1,7 +1,6 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
 import {UserGroupTable} from '@db/tables';
-import {validateMasterKey} from '@libs/utils';
 import {UserGroupFactory} from '@models/factories/user-group-factory';
 import {IUserGroup, IUserGroupScanResult} from '@models/interfaces/i-user-group';
 
@@ -38,20 +37,16 @@ export class UserGroupController {
   }
 
   public down(req, res): void {
-    if (validateMasterKey(req)) {
-      this.userGroupTable.down((err, data: DynamoDB.Types.DeleteTableOutput) => {
-        if (!err) {
-          const {TableName: tableName, TableStatus: status} = data.TableDescription;
-          res.json({tableName, status});
-        } else {
-          console.error(err);
-          const {message} = err;
-          res.status(err.statusCode).json({message});
-        }
-      });
-    } else {
-      res.status(403).end();
-    }
+    this.userGroupTable.down((err, data: DynamoDB.Types.DeleteTableOutput) => {
+      if (!err) {
+        const {TableName: tableName, TableStatus: status} = data.TableDescription;
+        res.json({tableName, status});
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
   }
 
   public find(req, res): void {
@@ -99,20 +94,16 @@ export class UserGroupController {
   }
 
   public up(req, res): void {
-    if (validateMasterKey(req)) {
-      this.userGroupTable.up((err, data: DynamoDB.Types.CreateTableOutput) => {
-        if (!err) {
-          const {TableName: tableName, TableStatus: status} = data.TableDescription;
-          res.json({tableName, status});
-        } else {
-          console.error(err);
-          const {message} = err;
-          res.status(err.statusCode).json({message});
-        }
-      });
-    } else {
-      res.status(403).end();
-    }
+    this.userGroupTable.up((err, data: DynamoDB.Types.CreateTableOutput) => {
+      if (!err) {
+        const {TableName: tableName, TableStatus: status} = data.TableDescription;
+        res.json({tableName, status});
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
   }
 
   public update(req, res): void {

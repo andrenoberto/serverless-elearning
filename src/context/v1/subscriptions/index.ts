@@ -1,6 +1,7 @@
 import Express from 'express';
 
 import {SubscriptionControllerValidator} from '@api/v1/subscriptions/validator';
+import {Validators} from '@libs/validators';
 import {SubscriptionController} from './controller';
 
 const controller = new SubscriptionController();
@@ -30,11 +31,11 @@ router.post('/', SubscriptionControllerValidator.putSubscription, (req, res) => 
   controller.put(req, res);
 });
 
-router.post('/down', SubscriptionControllerValidator.tableManagementSubscription, (req, res) => {
+router.post('/down', Validators.tableManagement, Validators.masterKey, (req, res) => {
   controller.down(req, res);
 });
 
-router.post('/up', SubscriptionControllerValidator.tableManagementSubscription, (req, res) => {
+router.post('/up', Validators.tableManagement, Validators.masterKey, (req, res) => {
   controller.up(req, res);
 });
 
