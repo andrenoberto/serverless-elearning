@@ -6,6 +6,14 @@ import {Validators} from '@libs/validators';
 const controller = new VideoController();
 const router = Express.Router();
 
+router.get('/', (req, res) => {
+  controller.get(req, res);
+});
+
+router.get('/:uuid', (req, res) => {
+  controller.find(req, res);
+});
+
 router.post('/down', Validators.tableManagement, Validators.masterKey, (req, res) => {
   controller.down(req, res);
 });

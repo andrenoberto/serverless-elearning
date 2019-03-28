@@ -2,8 +2,7 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
-import {IConfigDynamoDB, IMigration} from '@models/interfaces';
-import {IUserGroup} from '@models/interfaces/i-user-group';
+import {IConfigDynamoDB, IMigration, IUserGroup} from '@models/interfaces';
 
 export class UserGroupTable extends Table implements IMigration {
   public readonly tableName: string;
@@ -13,7 +12,7 @@ export class UserGroupTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
-  public batchDelete(items: Array<string>, callback): void {
+  public batchDelete(items: string[], callback): void {
     this.batchDeleteItem(items, this.tableName, callback);
   }
 

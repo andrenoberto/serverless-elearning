@@ -2,8 +2,7 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
-import {IConfigDynamoDB, IMigration} from '@models/interfaces';
-import {ISubscription} from '@models/interfaces/i-subscription';
+import {IConfigDynamoDB, IMigration, ISubscription} from '@models/interfaces';
 
 export class SubscriptionTable extends Table implements IMigration {
   private readonly tableName: string;
@@ -13,7 +12,7 @@ export class SubscriptionTable extends Table implements IMigration {
     this.tableName = tableName;
   }
 
-  public batchDelete(items: Array<string>, callback): void {
+  public batchDelete(items: string[], callback): void {
     this.batchDeleteItem(items, this.tableName, callback);
   }
 

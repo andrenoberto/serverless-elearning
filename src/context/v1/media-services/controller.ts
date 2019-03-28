@@ -2,7 +2,7 @@ import * as AWS from 'aws-sdk';
 import {v4 as uuidv4} from 'uuid';
 
 import {Config} from '@config/environment';
-import {OutputGroupFactory} from '@models/factories/output-group-factory';
+import {OutputGroupFactory} from '@models/factories';
 import {IConfig} from '@models/interfaces';
 
 export class MediaServicesController {

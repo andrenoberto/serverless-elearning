@@ -18,6 +18,6 @@ export interface IDynamoSubscriptionItem {
     N: string
   };
   UserGroups?: {
-    SS: Array<string>
+    SS: string[]
   };
 }

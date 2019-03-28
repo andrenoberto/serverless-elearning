@@ -1,8 +1,8 @@
 import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
 import {UserGroupTable} from '@db/tables';
-import {UserGroupFactory} from '@models/factories/user-group-factory';
-import {IUserGroup, IUserGroupScanResult} from '@models/interfaces/i-user-group';
+import {UserGroupFactory} from '@models/factories';
+import {IUserGroup, IUserGroupScanResult} from '@models/interfaces';
 
 export class UserGroupController {
   constructor(private readonly userGroupTable = new UserGroupTable()) {

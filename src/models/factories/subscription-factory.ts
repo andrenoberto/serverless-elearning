@@ -2,7 +2,7 @@ import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 import {oc} from 'ts-optchain';
 
 import {IDynamoSubscriptionItem} from '@db/interfaces';
-import {ISubscription, ISubscriptionScanResult} from '@models/interfaces/i-subscription';
+import {ISubscription, ISubscriptionScanResult} from '@models/interfaces';
 
 export class SubscriptionFactory {
   public static convertGetItemFromDynamoDB(getItemOutput: DynamoDB.Types.GetItemOutput): ISubscription {
@@ -30,7 +30,7 @@ export class SubscriptionFactory {
   }
 
   public static convertScanFromDynamoDB(scanOutput: DynamoDB.Types.ScanOutput): ISubscriptionScanResult {
-    const subscriptions: Array<ISubscription> = [];
+    const subscriptions: ISubscription[] = [];
     scanOutput.Items.forEach((item: IDynamoSubscriptionItem) => {
       subscriptions.push({
         uuid: oc(item).Uuid.S(''),
