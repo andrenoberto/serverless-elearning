@@ -4,16 +4,6 @@ import Express from 'express';
 import cors from '@libs/cors';
 import Routes from '@src/routes';
 
-interface IFrameworkApplication {
-  handle: () => void;
-  router: {
-    route: () => void;
-  };
-  _core: {
-    _dispatch: () => void;
-  };
-}
-
 export class API {
   constructor(public readonly expressApp: Express.Application = Express()) {
     this.configureApi();
@@ -47,8 +37,7 @@ export class API {
     }
   }
 
-  /* tslint:disable-next-line ban-types */
-  public get app(): Function | Partial<IFrameworkApplication> {
+  public get app(): Express.Application {
     return this.expressApp;
   }
 }
