@@ -1,4 +1,4 @@
-import DynamoDB = require('aws-sdk/clients/dynamodb');
+import * as DynamoDB from 'aws-sdk/clients/dynamodb';
 
 import {VideoTable} from '@db/tables';
 import {VideoFactory} from '@models/factories';
@@ -49,6 +49,18 @@ export class VideoController {
         res.status(err.statusCode).json({message});
       }
     }, req.params.exclusiveStartKey || null);
+  }
+
+  public put(req, res): void {
+    this.videoTable.put(req.body, (err, data) => {
+      if (!err) {
+        res.json({signedRequest: data});
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
   }
 
   public up(req, res): void {

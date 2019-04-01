@@ -5,6 +5,7 @@ export interface IConfig {
   env: IConfigEnv;
   master: IConfigMasterKey;
   mediaConvert: IConfigMediaConvert;
+  video: IConfigVideo;
 }
 
 export interface IConfigAWS {
@@ -36,6 +37,7 @@ export interface IConfigMasterKey {
 export interface IConfigMediaConvert {
   jobTemplate: string;
   options: IConfigMediaConvertOptions;
+  inputBucket: string;
   outputBucket: string;
   role: string;
 }
@@ -43,4 +45,10 @@ export interface IConfigMediaConvert {
 export interface IConfigMediaConvertOptions {
   apiVersion: string;
   endpoint: string;
+}
+
+export interface IConfigVideo {
+  fields: number;
+  fileSize: number;
+  files: number;
 }

@@ -14,6 +14,10 @@ router.get('/:uuid', (req, res) => {
   controller.find(req, res);
 });
 
+router.post('/', (req, res) => {
+  controller.put(req, res);
+});
+
 router.post('/down', Validators.tableManagement, Validators.masterKey, (req, res) => {
   controller.down(req, res);
 });
