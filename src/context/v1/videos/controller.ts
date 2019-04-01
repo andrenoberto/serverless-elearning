@@ -53,13 +53,13 @@ export class VideoController {
   }
 
   public put(req, res): void {
-    const uuid = uuidv4();
+    const uuid = req.body.uuid ? req.body.uuid : uuidv4();
     const input: IVideoInput = {
       contentType: req.body.contentType,
       extension: req.body.extension,
       key: uuid
     };
-    this.videoTable.put(input, (err, data) => {
+    this.videoTable.put(input, (err, data: string) => {
       if (!err) {
         res.json({signedRequest: data, uuid});
       } else {
