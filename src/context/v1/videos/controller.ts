@@ -55,8 +55,8 @@ export class VideoController {
   public put(req, res): void {
     const uuid = uuidv4();
     const input: IVideoInput = {
-      contentType: req.body.contentType,
-      extension: req.body.extension,
+      contentType: req.query.contentType,
+      extension: req.query.extension,
       key: uuid
     };
     this.videoTable.put(input, (err, data) => {

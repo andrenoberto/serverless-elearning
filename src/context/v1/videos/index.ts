@@ -14,7 +14,7 @@ router.get('/:uuid', (req, res) => {
   controller.find(req, res);
 });
 
-router.post('/', (req, res) => {
+router.get('/sign', (req, res) => {
   controller.put(req, res);
 });
 
