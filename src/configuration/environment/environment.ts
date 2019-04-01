@@ -6,7 +6,8 @@ import {
   IConfigDynamoDB,
   IConfigEnv,
   IConfigMasterKey,
-  IConfigMediaConvert
+  IConfigMediaConvert,
+  IConfigVideo
 } from '@models/interfaces';
 
 export class Environment {
@@ -54,8 +55,18 @@ export class Environment {
         endpoint: GetEnv.string('AWS_MEDIA_CONVERT_ENDPOINT')
       },
       /* tslint:disable-next-line max-line-length */
+      inputBucket: `${this.env.serverless}-${this.awsAccount.accountId}-${this.env.stage}-${GetEnv.string('AWS_MEDIA_CONVERT_INPUT_BUCKET')}`,
+      /* tslint:disable-next-line max-line-length */
       outputBucket: `${this.env.serverless}-${this.awsAccount.accountId}-${this.env.stage}-${GetEnv.string('AWS_MEDIA_CONVERT_OUTPUT_BUCKET')}`,
       role: `arn:aws:iam::${this.awsAccount.accountId}:role/${GetEnv.string('AWS_MEDIA_CONVERT_ROLE')}`
+    };
+  }
+
+  public static get video(): IConfigVideo {
+    return {
+      fields: GetEnv.int('VIDEO_MAX_FIELDS'),
+      fileSize: GetEnv.int('VIDEO_MAX_FILE_SIZE'),
+      files: GetEnv.int('VIDEO_MAX_FILES')
     };
   }
 }

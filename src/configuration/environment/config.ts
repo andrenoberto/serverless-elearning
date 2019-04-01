@@ -13,7 +13,8 @@ export class Config {
       dynamoDB: Environment.dynamoDB,
       env: Environment.env,
       master: Environment.master,
-      mediaConvert: Environment.mediaConvert
+      mediaConvert: Environment.mediaConvert,
+      video: Environment.video
     };
   }
 }
