@@ -1,6 +1,7 @@
 export interface IConfig {
   aws: IConfigAWS;
   awsAccount: IConfigAWSAccount;
+  awsS3: IConfigAWSS3;
   dynamoDB: IConfigDynamoDB;
   env: IConfigEnv;
   master: IConfigMasterKey;
@@ -12,6 +13,11 @@ export interface IConfigAWS {
   apiVersion: string;
   accessKeyId: string;
   region: string;
+  secretAccessKey: string;
+}
+
+export interface IConfigAWSS3 {
+  accessKeyId: string;
   secretAccessKey: string;
 }
 

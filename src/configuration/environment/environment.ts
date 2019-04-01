@@ -2,7 +2,7 @@ import * as GetEnv from 'getenv';
 
 import {
   IConfigAWS,
-  IConfigAWSAccount,
+  IConfigAWSAccount, IConfigAWSS3,
   IConfigDynamoDB,
   IConfigEnv,
   IConfigMasterKey,
@@ -23,6 +23,13 @@ export class Environment {
   public static get awsAccount(): IConfigAWSAccount {
     return {
       accountId: GetEnv.string('AWS_ACCOUNT_ID')
+    };
+  }
+
+  public static get awsS3(): IConfigAWSS3 {
+    return {
+      accessKeyId: GetEnv.string('AWS_S3_KEY'),
+      secretAccessKey: GetEnv.string('AWS_S3_SECRET')
     };
   }
 

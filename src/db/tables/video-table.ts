@@ -5,13 +5,14 @@ import {IConfigDynamoDB, IMigration, IVideoInput} from '@models/interfaces';
 
 export class VideoTable extends Table implements IMigration {
   private readonly tableName: string;
+  private readonly s3: S3;
 
   constructor(
-    {tableName} = {tableName: 'Videos'},
-    private readonly s3 = new S3()
+    {tableName} = {tableName: 'Videos'}
   ) {
     super();
     this.tableName = tableName;
+    this.s3 = new S3({...this.config.awsS3});
   }
 
   public down(callback): void {
