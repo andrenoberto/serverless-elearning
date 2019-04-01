@@ -44,7 +44,6 @@
     "getenv": "^0.7.0",
     "joi": "^14.3.1",
     "module-alias": "^2.2.0",
-    "multer": "^1.4.1",
     "serverless": "^1.39.1",
     "serverless-http": "^1.9.0",
     "ts-optchain": "^0.1.3",
