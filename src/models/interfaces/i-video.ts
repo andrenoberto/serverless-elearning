@@ -1,4 +1,5 @@
 import {Key} from 'aws-sdk/clients/dynamodb';
+import {ReadStream} from 'fs';
 
 import {ISubscription} from '@models/interfaces/i-subscription';
 
@@ -28,4 +29,10 @@ export interface IOutputDetails {
 export interface IVideoDetails {
   widthInPx?: number;
   heightInPx?: number;
+}
+
+export interface IVideoInput {
+  contentType: string;
+  extension: string;
+  key: string;
 }

@@ -2,11 +2,12 @@ import * as GetEnv from 'getenv';
 
 import {
   IConfigAWS,
-  IConfigAWSAccount,
+  IConfigAWSAccount, IConfigAWSS3,
   IConfigDynamoDB,
   IConfigEnv,
   IConfigMasterKey,
-  IConfigMediaConvert
+  IConfigMediaConvert,
+  IConfigVideo
 } from '@models/interfaces';
 
 export class Environment {
@@ -22,6 +23,13 @@ export class Environment {
   public static get awsAccount(): IConfigAWSAccount {
     return {
       accountId: GetEnv.string('AWS_ACCOUNT_ID')
+    };
+  }
+
+  public static get awsS3(): IConfigAWSS3 {
+    return {
+      accessKeyId: GetEnv.string('AWS_S3_KEY'),
+      secretAccessKey: GetEnv.string('AWS_S3_SECRET')
     };
   }
 
@@ -54,8 +62,18 @@ export class Environment {
         endpoint: GetEnv.string('AWS_MEDIA_CONVERT_ENDPOINT')
       },
       /* tslint:disable-next-line max-line-length */
+      inputBucket: `${this.env.serverless}-${this.awsAccount.accountId}-${this.env.stage}-${GetEnv.string('AWS_MEDIA_CONVERT_INPUT_BUCKET')}`,
+      /* tslint:disable-next-line max-line-length */
       outputBucket: `${this.env.serverless}-${this.awsAccount.accountId}-${this.env.stage}-${GetEnv.string('AWS_MEDIA_CONVERT_OUTPUT_BUCKET')}`,
       role: `arn:aws:iam::${this.awsAccount.accountId}:role/${GetEnv.string('AWS_MEDIA_CONVERT_ROLE')}`
+    };
+  }
+
+  public static get video(): IConfigVideo {
+    return {
+      fields: GetEnv.int('VIDEO_MAX_FIELDS'),
+      fileSize: GetEnv.int('VIDEO_MAX_FILE_SIZE'),
+      files: GetEnv.int('VIDEO_MAX_FILES')
     };
   }
 }

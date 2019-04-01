@@ -1,8 +1,9 @@
-import DynamoDB = require('aws-sdk/clients/dynamodb');
+import * as DynamoDB from 'aws-sdk/clients/dynamodb';
+import {v4 as uuidv4} from 'uuid';
 
 import {VideoTable} from '@db/tables';
 import {VideoFactory} from '@models/factories';
-import {IVideo, IVideoScanResult} from '@models/interfaces';
+import {IVideo, IVideoInput, IVideoScanResult} from '@models/interfaces';
 
 export class VideoController {
   constructor(private readonly videoTable = new VideoTable()) {
@@ -49,6 +50,24 @@ export class VideoController {
         res.status(err.statusCode).json({message});
       }
     }, req.params.exclusiveStartKey || null);
+  }
+
+  public put(req, res): void {
+    const uuid = req.body.uuid ? req.body.uuid : uuidv4();
+    const input: IVideoInput = {
+      contentType: req.body.contentType,
+      extension: req.body.extension,
+      key: uuid
+    };
+    this.videoTable.put(input, (err, data: string) => {
+      if (!err) {
+        res.json({signedRequest: data, uuid});
+      } else {
+        console.error(err);
+        const {message} = err;
+        res.status(err.statusCode).json({message});
+      }
+    });
   }
 
   public up(req, res): void {

@@ -1,14 +1,18 @@
-import {Table} from '@db/tables/table';
+import {DynamoDB, S3} from 'aws-sdk';
 
-import {IConfigDynamoDB, IMigration} from '@models/interfaces';
-import DynamoDB = require('aws-sdk/clients/dynamodb');
+import {Table} from '@db/tables/table';
+import {IConfigDynamoDB, IMigration, IVideoInput} from '@models/interfaces';
 
 export class VideoTable extends Table implements IMigration {
   private readonly tableName: string;
+  private readonly s3: S3;
 
-  constructor({tableName} = {tableName: 'Videos'}) {
+  constructor(
+    {tableName} = {tableName: 'Videos'}
+  ) {
     super();
     this.tableName = tableName;
+    this.s3 = new S3({...this.config.awsS3});
   }
 
   public down(callback): void {
@@ -51,6 +55,15 @@ export class VideoTable extends Table implements IMigration {
       };
     }
     this.scanTable(params, callback);
+  }
+
+  public put(input: IVideoInput, callback): void {
+    const params = {
+      Bucket: this.config.mediaConvert.inputBucket,
+      Key: `${input.key}.${input.extension}`,
+      ContentType: `${input.contentType}`
+    };
+    this.s3.getSignedUrl('putObject', params, callback);
   }
 
   public up(callback, {

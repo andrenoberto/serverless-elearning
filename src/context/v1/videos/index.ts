@@ -18,6 +18,10 @@ router.post('/down', Validators.tableManagement, Validators.masterKey, (req, res
   controller.down(req, res);
 });
 
+router.post('/sign', (req, res) => {
+  controller.put(req, res);
+});
+
 router.post('/up', Validators.tableManagement, Validators.masterKey, (req, res) => {
   controller.up(req, res);
 });

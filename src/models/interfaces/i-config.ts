@@ -1,16 +1,23 @@
 export interface IConfig {
   aws: IConfigAWS;
   awsAccount: IConfigAWSAccount;
+  awsS3: IConfigAWSS3;
   dynamoDB: IConfigDynamoDB;
   env: IConfigEnv;
   master: IConfigMasterKey;
   mediaConvert: IConfigMediaConvert;
+  video: IConfigVideo;
 }
 
 export interface IConfigAWS {
   apiVersion: string;
   accessKeyId: string;
   region: string;
+  secretAccessKey: string;
+}
+
+export interface IConfigAWSS3 {
+  accessKeyId: string;
   secretAccessKey: string;
 }
 
@@ -36,6 +43,7 @@ export interface IConfigMasterKey {
 export interface IConfigMediaConvert {
   jobTemplate: string;
   options: IConfigMediaConvertOptions;
+  inputBucket: string;
   outputBucket: string;
   role: string;
 }
@@ -43,4 +51,10 @@ export interface IConfigMediaConvert {
 export interface IConfigMediaConvertOptions {
   apiVersion: string;
   endpoint: string;
+}
+
+export interface IConfigVideo {
+  fields: number;
+  fileSize: number;
+  files: number;
 }

@@ -10,10 +10,12 @@ export class Config {
     return {
       aws: Environment.aws,
       awsAccount: Environment.awsAccount,
+      awsS3: Environment.awsS3,
       dynamoDB: Environment.dynamoDB,
       env: Environment.env,
       master: Environment.master,
-      mediaConvert: Environment.mediaConvert
+      mediaConvert: Environment.mediaConvert,
+      video: Environment.video
     };
   }
 }

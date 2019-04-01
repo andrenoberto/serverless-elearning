@@ -7,9 +7,18 @@ downTableVideo:
         method: POST
         cors: true
 
+getSignedUrl:
+  handler: src/app.handler
+  name: ${self:service}-${self:provider.stage}-getSignedUrl
+  events:
+    - http:
+        path: api/v1/videos/sign
+        method: POST
+        cors: true
+
 getVideoByUuid:
   handler: src/app.handler
-  name: ${self:service}-${self:provider.stage}-getSubscriptionByUuid
+  name: ${self:service}-${self:provider.stage}-getVideoByUuid
   events:
     - http:
         path: api/v1/videos/{uuid}
