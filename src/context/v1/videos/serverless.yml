@@ -13,7 +13,7 @@ getSignedUrl:
   events:
     - http:
         path: api/v1/videos/sign
-        method: GET
+        method: POST
         cors: true
 
 getVideoByUuid:
