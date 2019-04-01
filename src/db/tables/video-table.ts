@@ -1,5 +1,4 @@
 import {DynamoDB, S3} from 'aws-sdk';
-import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
 import {IConfigDynamoDB, IMigration, IVideoInput} from '@models/interfaces';
@@ -10,7 +9,7 @@ export class VideoTable extends Table implements IMigration {
   constructor(
     {tableName} = {tableName: 'Videos'},
     private readonly s3 = new S3()
-              ) {
+  ) {
     super();
     this.tableName = tableName;
   }
@@ -60,7 +59,7 @@ export class VideoTable extends Table implements IMigration {
   public put(input: IVideoInput, callback): void {
     const params = {
       Bucket: this.config.mediaConvert.inputBucket,
-      Key: `${uuidv4()}.${input.extension}`,
+      Key: `${input.key}.${input.extension}`,
       ContentType: `${input.contentType}`
     };
     this.s3.getSignedUrl('putObject', params, callback);

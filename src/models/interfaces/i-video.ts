@@ -32,6 +32,7 @@ export interface IVideoDetails {
 }
 
 export interface IVideoInput {
-  extension: string;
   contentType: string;
+  extension: string;
+  key: string;
 }
