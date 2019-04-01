@@ -31,8 +31,7 @@ export interface IVideoDetails {
   heightInPx?: number;
 }
 
-export interface IVIdeoInput {
-  body: ReadStream;
-  key: string;
-  originalName: string;
+export interface IVideoInput {
+  extension: string;
+  contentType: string;
 }
