@@ -1,5 +1,6 @@
+import {getFileName} from '@libs/utils';
 import * as AWS from 'aws-sdk';
-import {v4 as uuidv4} from 'uuid';
+import {extname} from 'path';
 
 import {Config} from '@config/environment';
 import {OutputGroupFactory} from '@models/factories';
@@ -16,9 +17,10 @@ export class MediaServicesController {
     const {s3} = event.Records[0];
     const sourceS3Bucket = s3.bucket.name;
     const sourceS3Key = s3.object.key;
-    const uuid = uuidv4();
+    const extension = extname(sourceS3Key);
+    const fileUuid = getFileName(sourceS3Key, extension);
     const fileInput = `s3://${sourceS3Bucket}/${sourceS3Key}`;
-    const destinationSource = `s3://${this.config.mediaConvert.outputBucket}/${uuid}`;
+    const destinationSource = `s3://${this.config.mediaConvert.outputBucket}/${fileUuid}`;
     const mediaConvert = new AWS.MediaConvert({
       ...this.config.aws,
       ...this.config.mediaConvert.options
@@ -57,7 +59,7 @@ export class MediaServicesController {
         },
         UserMetadata: {
           application: this.config.env.serverless,
-          uuid
+          uuid: fileUuid
         }
       };
       const params: AWS.MediaConvert.GetJobTemplateRequest = {
@@ -95,7 +97,7 @@ export class MediaServicesController {
         inputFileName,
         inputSource,
         size,
-        uuid
+        uuid: fileUuid
       };
       console.log(JSON.stringify(media));
     } catch (err) {

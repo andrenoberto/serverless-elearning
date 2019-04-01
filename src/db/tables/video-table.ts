@@ -2,7 +2,7 @@ import {DynamoDB, S3} from 'aws-sdk';
 import {v4 as uuidv4} from 'uuid';
 
 import {Table} from '@db/tables/table';
-import {IConfigDynamoDB, IMigration, IVIdeoInput} from '@models/interfaces';
+import {IConfigDynamoDB, IMigration, IVideoInput} from '@models/interfaces';
 
 export class VideoTable extends Table implements IMigration {
   private readonly tableName: string;
@@ -57,7 +57,7 @@ export class VideoTable extends Table implements IMigration {
     this.scanTable(params, callback);
   }
 
-  public put(input, callback): void {
+  public put(input: IVideoInput, callback): void {
     const params = {
       Bucket: this.config.mediaConvert.inputBucket,
       Key: `${uuidv4()}.${input.extension}`,
